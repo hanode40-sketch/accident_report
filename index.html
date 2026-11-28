@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var t=localStorage.getItem('nwTheme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script src="https://hanode40-sketch.github.io/all-op/auth.js" data-tool="accident"></script>
+<title>نورث ويست باص - تقرير حادث</title>
+<style>
+  :root{
+    --red:#1f2d4d; --red-soft:#e8ecf4; --err:#c62828; --ink:#1a1a1a; --muted:#666; --line:#333; --light-line:#bbb;
+    --bg:#eef0f3; --paper:#fff; --yellow:#fff59d; --accent:#1f6feb; --ok:#1e7e34;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--ink);font-size:13px}
+  .toolbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #ddd;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+  .toolbar button{font:inherit;padding:7px 14px;border-radius:8px;border:1px solid #bbb;background:#fff;cursor:pointer}
+  .toolbar button.primary{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+  .toolbar button.on{background:#e6f4ea;font-weight:700}
+  .toolbar .sp{flex:1 1 0;min-width:0}
+  #save-note{font-size:12px;color:var(--ok)}
+  .page{width:min(210mm,100%);margin:14px auto;background:var(--paper);padding:10mm;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+  table.f{width:100%;border-collapse:collapse;table-layout:fixed}
+  table.f td{border:1px solid var(--line);padding:3px 5px;vertical-align:middle;height:26px}
+  td.h{background:var(--red);color:#fff;font-weight:700;text-align:center}
+  td.lbl{font-weight:600;background:#fafafa}
+  td.ylw{background:var(--yellow)}
+  td.sec{background:var(--red);color:#fff;font-weight:700;text-align:center;font-size:14px}
+  input.c,textarea.c,select.c{width:100%;border:none;background:transparent;font:inherit;color:inherit;padding:2px;outline:none}
+  input.c:focus,textarea.c:focus,select.c:focus{background:#f2f7ff}
+  textarea.c{resize:vertical;min-height:70px;line-height:1.8}
+  .ruled{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 27px,#888 27px,#888 28px);line-height:28px!important;min-height:140px}
+  .logo-cell{text-align:center;height:60px}
+  .logo-cell img{height:52px}
+  .chk{display:flex;align-items:center;justify-content:space-between;gap:4px;cursor:pointer;user-select:none}
+  .chk input{width:16px;height:16px;accent-color:var(--red)}
+  .pct{display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+  .pct input{accent-color:var(--red)}
+  .diagram{position:relative;width:100%;max-width:760px;margin:0 auto;cursor:crosshair;touch-action:manipulation;user-select:none}
+  .diagram img{width:100%;display:block;pointer-events:none}
+  .xmark{position:absolute;width:5%;aspect-ratio:1;transform:translate(-50%,-50%);cursor:pointer}
+  .xmark::before,.xmark::after{content:"";position:absolute;left:50%;top:50%;width:110%;height:16%;background:#e00000;border-radius:3px;transform:translate(-50%,-50%) rotate(45deg)}
+  .xmark::after{transform:translate(-50%,-50%) rotate(-45deg)}
+  .diag-tools{display:flex;gap:8px;justify-content:center;margin-top:4px}
+  .diag-tools button{font:inherit;font-size:12px;padding:3px 10px;border:1px solid #bbb;background:#fff;border-radius:6px;cursor:pointer}
+  .hint{font-size:11px;color:var(--muted);text-align:center;margin:2px 0 0}
+  .sig-box{height:90px;position:relative}
+  .sig-box canvas{width:100%;height:86px;display:block;touch-action:none;cursor:crosshair}
+  .sig-box.sig-inline{height:60px}
+  .sig-box.sig-inline canvas{height:58px}
+  .pdf-mode .sig-box.sig-inline{height:56px}
+  .pdf-mode .sig-box.sig-inline img{height:54px;object-fit:contain}
+  .sig-name-cell{background:#fafafa}
+  input.sig-name{text-align:center;font-weight:600;font-size:12px;text-overflow:ellipsis;unicode-bidi:plaintext}
+  .sig-box::before{content:attr(data-label);position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:10px;color:#aaa;pointer-events:none}
+  .sig-clear{position:absolute;top:2px;inset-inline-start:2px;font-size:10px;padding:1px 6px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer}
+  .sug-wrap{position:relative}
+  .combo{display:flex;align-items:center}
+  .combo input{flex:1;min-width:0}
+  .combo-arrow{cursor:pointer;padding:0 6px;color:#555;font-size:14px}
+  .sug-count{background:#f6f6f6;color:#666;font-size:11px;cursor:default!important}
+  .sug{display:none;position:absolute;top:100%;left:0;right:0;z-index:25;background:#fff;border:1px solid #bbb;max-height:280px;overflow-y:auto;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+  .sug div{padding:6px 8px;cursor:pointer;border-bottom:1px solid #eee;font-size:12px}
+  .sug div:hover{background:#f5f5f5}
+  .sug small{color:var(--muted)}
+  .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+  .photos figure{margin:0;position:relative;border:1px solid #ddd}
+  .photos img{width:100%;height:150px;object-fit:cover;display:block}
+  .photos button{position:absolute;top:4px;inset-inline-end:4px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer}
+  .pbtn{font:inherit;padding:8px 14px;border:1px solid #bbb;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  #cam-modal{position:fixed;inset:0;z-index:100;background:#000;align-items:center;justify-content:center}
+  .cam-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column}
+  #cam-video{flex:1;width:100%;min-height:0;object-fit:contain;background:#000;transition:opacity .1s}
+  .cam-bar{display:flex;align-items:center;justify-content:space-around;padding:14px 10px calc(14px + env(safe-area-inset-bottom));background:#111}
+  .cam-snap{width:68px;height:68px;border-radius:50%;border:5px solid #fff;background:var(--red);cursor:pointer}
+  .cam-snap:active{transform:scale(.92)}
+  .cam-count{position:absolute;top:12px;left:0;right:0;text-align:center;color:#fff;font-weight:600;text-shadow:0 1px 3px #000}
+  .photo-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .no-print{}
+  .amount{display:flex;align-items:center;gap:6px}
+  @media (max-width:640px){
+    .page{padding:3mm;margin:0}
+    body{font-size:11.5px}
+    table.f td{padding:2px 3px}
+  }
+  .pdf-mode .no-print,.pdf-mode .sig-clear,.pdf-mode .hint,.pdf-mode .diag-tools{display:none!important}
+  .pdf-mode .page{box-shadow:none;margin:0;padding:0;width:100%;max-width:100%}
+  .pdf-mode input.c,.pdf-mode textarea.c,.pdf-mode select.c{-webkit-appearance:none;appearance:none}
+  .pdf-mode textarea.c{resize:none;overflow:hidden}
+  .pdf-mode .diagram{max-width:680px}
+  .pdf-mode ::placeholder{color:transparent!important}
+  .pdf-mode input::-webkit-calendar-picker-indicator{display:none}
+  .pdf-mode input.is-empty{color:transparent!important}
+  .pdf-mode .ruled{min-height:112px}
+  .pdf-mode table.f td{height:23px;padding:2px 4px}
+  .pdf-mode .sig-box{height:80px}
+  .pdf-mode .sig-box::before{display:none}
+  .pdf-mode .sig-box img{width:100%;height:76px;display:block;object-fit:contain}
+  select.c.is-placeholder{color:#888}
+  .stepper{display:flex;gap:4px;align-items:center;font-size:12px;flex-wrap:wrap}
+  .stepper span{padding:4px 10px;border-radius:14px;background:#f0f0f0;color:#777;white-space:nowrap}
+  .stepper span.done{background:#e6f4ea;color:#1e7e34}
+  .stepper span.cur{background:var(--red);color:#fff;font-weight:700}
+  .stepper i{color:#bbb;font-style:normal}
+  .locked{pointer-events:none}
+  .lockable-locked{opacity:.85}
+  td.stage-active{box-shadow:inset 0 0 0 2px #ffc107}
+  .pdf-mode td.stage-active{box-shadow:none}
+  #status-cell{font-size:11.5px;line-height:1.7}
+  #status-cell b{color:var(--red)}
+  #status-cell .hist{color:#444}
+  body.landing-on #stepper,body.landing-on #btn-send,body.landing-on #btn-pdf,body.landing-on #btn-print,body.landing-on #btn-new,body.landing-on #btn-open,body.landing-on #save-note{display:none!important}
+  .spin{width:34px;height:34px;border:4px solid #eee;border-top-color:var(--red);border-radius:50%;margin:10px auto;animation:sp 0.8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .landing{padding:28px 12px}
+  .landing-card{max-width:520px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:26px 20px;text-align:center}
+  .landing-icon{font-size:44px}
+  .landing-card h2{margin:8px 0 6px;font-size:19px}
+  .landing-card p{color:#555;margin:4px 0 16px;line-height:1.7}
+  .landing-hint{font-size:12px;color:#888!important;margin-top:14px!important}
+  .big-btn{font:inherit;font-size:16px;font-weight:700;padding:14px 22px;border-radius:10px;border:none;background:var(--red);color:#fff;cursor:pointer;width:100%;max-width:360px}
+  .big-btn.wa{background:#25D366}
+  .big-btn.chrome{background:#1a73e8;margin-bottom:10px}
+  .inapp-warn{background:#fff4e5;border:1px solid #ffb74d;color:#8a4b00;border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:13px;line-height:1.7}
+  .modal{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:12px}
+  .modal-card{background:#fff;border-radius:14px;max-width:520px;width:100%;padding:20px;max-height:92vh;overflow:auto}
+  .modal-card h3{margin:0 0 10px;font-size:17px}
+  .sm-steps{margin:0 0 10px;padding-inline-start:20px;line-height:1.8;font-size:13px}
+  .sm-steps li.ok{color:var(--ok)}
+  .sm-text{width:100%;min-height:150px;font:inherit;font-size:12.5px;border:1px solid #ddd;border-radius:8px;padding:8px;background:#fafafa;resize:vertical}
+  .sm-actions{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:10px}
+  .sm-actions .pbtn{width:100%;max-width:360px;justify-content:center}
+  .sm-done{width:100%;margin-top:14px;justify-content:center;font-weight:600}
+  /* ===== quick entry form (same look as the violation report) ===== */
+  body.mode-entry{background:#f3f3f3}
+  body.mode-entry .toolbar{display:none!important}
+  .entry{max-width:640px;margin:0 auto;padding:18px 14px 110px}
+  .e-top{text-align:center;margin-bottom:16px}
+  .e-logo{background:#fff;display:inline-block;padding:6px 10px}
+  .e-logo img{height:96px;display:block}
+  .e-title{font-size:22px;font-weight:800;color:#111;margin:14px 0 4px}
+  .e-sub{font-size:16px;color:#6b6b6b}
+  .e-repno{font-size:12.5px;color:#888;margin-top:6px}
+  .e-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 16px}
+  .e-actions button{font:inherit;font-size:18px;padding:16px 8px;border:1px solid #c9c9c9;border-radius:10px;background:#fff;color:#111;cursor:pointer}
+  .e-actions button.main{font-weight:800}
+  .e-card{background:#fff;border:1px solid #dcdcdc;border-radius:16px;padding:22px 18px 8px;margin-bottom:16px}
+  .e-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding-bottom:12px;margin-bottom:18px;border-bottom:3px solid #1f2d4d}
+  .e-h b{font-size:21px;color:#1f2d4d;font-weight:800}
+  .e-h span{font-size:15px;color:#6b6b6b}
+  .e-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .e-full{grid-column:1/-1}
+  .e-f{margin-bottom:18px;min-width:0}
+  .e-f>label{display:block;font-size:14.5px;color:#555;margin-bottom:9px}
+  .e-f>label .en{color:#777}
+  .e-f>label .req{color:var(--err);font-style:normal}
+  .wi{width:100%;font:inherit;font-size:17px;padding:13px 14px;border:1px solid #bdbdbd;border-radius:8px;background:#fff;color:#111;min-height:54px}
+  .wi::placeholder{color:#9a9a9a}
+  .wi:focus{outline:none;border-color:#1f2d4d;box-shadow:0 0 0 3px rgba(31,45,77,.12)}
+  .wi.bad{border-color:var(--err);background:#fff5f5}
+  select.wi{background:#ececec;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#444 50%),linear-gradient(135deg,#444 50%,transparent 50%);background-position:18px 24px,24px 24px;background-size:6px 6px;background-repeat:no-repeat;padding-inline-end:14px}
+  [dir=ltr] select.wi{background-position:calc(100% - 24px) 24px,calc(100% - 18px) 24px}
+  textarea.wi{resize:vertical;line-height:1.7;min-height:110px}
+  .w-hint{display:block;color:#8a8a8a;font-size:12.5px;margin-top:6px}
+  .wcombo{display:flex;align-items:center;border:1px solid #bdbdbd;border-radius:8px;background:#fff}
+  .wcombo .wi{border:none;box-shadow:none;min-width:0}
+  .wcombo .combo-arrow{font-size:18px;padding:0 10px;color:#555}
+  .entry .sug{z-index:60;max-height:46vh;border-radius:8px}
+  .entry .sug div{padding:10px 12px;font-size:14.5px}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .seg button{font:inherit;font-size:17px;padding:13px 6px;border:1px solid #bdbdbd;border-radius:8px;background:#fff;color:#111;cursor:pointer}
+  .seg button.on{background:#1f2d4d;border-color:#1f2d4d;color:#fff;font-weight:700}
+  .seg.seg5{grid-template-columns:repeat(5,1fr);gap:6px}
+  .seg.seg5 button{font-size:15px;padding:12px 2px}
+  .seg.seg5 button.on{background:var(--red);border-color:var(--red)}
+  .e-sub2{font-size:15.5px;color:#1f2d4d;font-weight:700;margin:2px 0 12px}
+  .e-sub2 .en{color:#888;font-weight:400;font-size:13.5px}
+  .dchk-list{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-bottom:12px}
+  .dchk{display:flex;align-items:flex-start;gap:10px;text-align:start;font:inherit;background:none;border:none;padding:8px 0;cursor:pointer;color:#111}
+  .dchk .box{flex:0 0 22px;height:22px;border:2px solid #666;border-radius:4px;margin-top:2px;position:relative}
+  .dchk.on .box{background:var(--red);border-color:var(--red)}
+  .dchk.on .box::after{content:"";position:absolute;left:6px;top:1px;width:6px;height:12px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+  .dchk .tx{font-size:16px;line-height:1.35}
+  .dchk .tx small{display:block;color:#888;font-size:12.5px}
+  .dchk.grp .tx{font-weight:700}
+  #entry #photo-page{box-shadow:none;margin:0;padding:0;width:auto;background:none}
+  #entry #photo-page .photo-head strong{display:none}
+  #entry #photo-page .pbtn{font-size:16px;padding:12px 16px}
+  .w-sigs{display:grid;gap:14px}
+  .w-sig{border:1px solid #bdbdbd;border-radius:8px;padding:10px;position:relative}
+  .w-sig-name{font-size:14px;color:#555;margin-bottom:6px;padding-inline-end:60px}
+  .w-sig-name b{color:#111}
+  .w-sig canvas{width:100%;height:130px;display:block;touch-action:none;background:#fafafa;border-radius:6px}
+  .w-sig-clear{position:absolute;top:8px;inset-inline-end:8px;padding:4px 12px;font-size:13px}
+  .w-bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(243,243,243,.97);border-top:1px solid #ddd;padding:12px 14px calc(12px + env(safe-area-inset-bottom));text-align:center;z-index:40}
+  .w-bottom .big-btn{max-width:612px;font-size:18px;padding:16px}
+  .e-ver{text-align:center;color:#aaa;font-size:11px;margin-top:6px}
+  body.mode-log{background:#f3f3f3}
+  body.mode-log .toolbar,body.mode-log #report,body.mode-log #photo-page,body.mode-log #entry,body.mode-log #preview-bar{display:none!important}
+  .pin-card{max-width:360px;text-align:center}
+  .pin-ico{font-size:40px}
+  .pin-card h3{margin:6px 0 2px;font-size:19px;color:#1f2d4d}
+  .pin-card h3 .en{color:#888;font-weight:400;font-size:14px}
+  .pin-sub{color:#666;margin:6px 0 14px}
+  .pin-input{text-align:center;font-size:24px;letter-spacing:8px}
+  .pin-err{color:var(--err);min-height:22px;margin-top:8px;font-size:13.5px}
+  .pin-actions{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:6px}
+  .pin-actions .big-btn{padding:12px}
+  .log-tools{padding:14px}
+  .log-filter{grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+  .log-filter button{font-size:14.5px;padding:10px 2px}
+  .log-count{color:#888;font-size:13px;margin-top:10px}
+  .log-item{background:#fff;border:1px solid #dcdcdc;border-radius:14px;padding:14px;margin-bottom:10px}
+  .log-row1{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .log-bus{font-size:19px;font-weight:800;color:#1f2d4d}
+  .log-badge{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:14px;white-space:nowrap}
+  .log-badge.s2{background:#fff4e5;color:#b25e00}
+  .log-badge.s3{background:#e8f0fe;color:#1a56c4}
+  .log-badge.s4{background:#e6f4ea;color:#1e7e34}
+  .log-meta{color:#555;font-size:14px;line-height:1.8;margin-top:6px}
+  .log-meta bdi{color:#888}
+  .log-btns{display:flex;gap:8px;margin-top:10px}
+  .log-btns a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:14.5px;padding:10px;border-radius:8px;border:1px solid #bdbdbd;color:#111;background:#fff}
+  .log-btns a.go{background:#1f2d4d;border-color:#1f2d4d;color:#fff}
+  .log-empty{text-align:center;color:#888;padding:30px 0}
+  .log-lock{display:block;margin:16px auto 0}
+  .preview-bar{max-width:210mm;margin:12px auto 0;background:#fff4e5;border:1px solid #ffb74d;border-radius:10px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:600;color:#8a4b00}
+  body.mode-entry #btn-print,body.mode-entry #btn-pdf,body.mode-entry #btn-send{display:none!important}
+  #pdf-busy{position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.85);display:none;align-items:center;justify-content:center;font-size:16px;font-weight:600}
+  @page{size:A4 portrait;margin:8mm}
+  @media print{
+    body{background:#fff}
+    .toolbar,.no-print,.sig-clear,.photos button,.hint{display:none!important}
+    .page{box-shadow:none;margin:0;padding:0;width:100%;max-width:100%}
+    #report{zoom:.74}
+    #report tr{break-inside:avoid}
+    td.h,td.sec,td.ylw,td.lbl,.xmark::before,.xmark::after,.ruled{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    input.c,textarea.c,select.c{-webkit-appearance:none;appearance:none}
+    textarea.c{resize:none;overflow:hidden}
+    #photo-page{page-break-before:always}
+    #photo-page.empty{display:none}
+    .diagram{max-width:680px}
+    .diag-tools{display:none!important}
+    ::placeholder{color:transparent!important}
+    input::-webkit-calendar-picker-indicator{display:none}
+    input.is-empty{color:transparent!important}
+    select.is-placeholder{color:transparent!important}
+    .ruled{min-height:112px}
+    table.f td{height:23px;padding:2px 4px}
+    .sig-box{height:80px}
+    .sig-box canvas{height:76px}
+    .sig-box.sig-inline{height:56px}
+    .sig-box.sig-inline canvas{height:54px}
+    .sig-box::before{display:none}
+    td.stage-active{box-shadow:none}
+  }
+
+  /* ===== ألوان وخلفية موحّدة مع باقي أدوات التشغيل ===== */
+  .entry .e-top .e-title, .entry .e-top .e-sub, .entry .e-top .e-repno, .e-ver, .log-count { color:#fff !important; text-shadow:0 2px 8px rgba(0,0,0,.45); }
+  .e-logo { border-radius:14px; box-shadow:0 4px 14px rgba(0,0,0,.15); }
+  .e-card, .log-item, .landing-card { box-shadow:0 6px 18px rgba(10,25,55,.18); }
+  .toolbar { background:rgba(255,255,255,.96); }
+  .big-btn { background:#1f3f7a; }
+
+  /* ===== الوضع الليلي (نفس باقي البرامج) — ورقة التقرير نفسها تبقى بيضاء مثل ملف PDF ===== */
+  html[data-theme="dark"] body { background:#0b1220; color:#f1f5f9; }
+  html[data-theme="dark"] .e-card, html[data-theme="dark"] .log-item, html[data-theme="dark"] .landing-card,
+  html[data-theme="dark"] .modal-card { background:rgba(22,28,40,.96); border-color:#2a3446; color:#f1f5f9; }
+  html[data-theme="dark"] .e-f>label, html[data-theme="dark"] .w-sig-name, html[data-theme="dark"] .log-meta,
+  html[data-theme="dark"] .landing-card p, html[data-theme="dark"] .pin-sub { color:#aab4c3; }
+  html[data-theme="dark"] .w-sig-name b, html[data-theme="dark"] .dchk { color:#f1f5f9; }
+  html[data-theme="dark"] .wi, html[data-theme="dark"] .wcombo, html[data-theme="dark"] .sm-text {
+    background:#0f1624; color:#f1f5f9; border-color:#3b4558; color-scheme:dark; }
+  html[data-theme="dark"] .wcombo .wi { background:transparent; }
+  html[data-theme="dark"] .wi.bad { background:#3a1e22; border-color:#f87171; }
+  html[data-theme="dark"] .combo-arrow { color:#aab4c3; }
+  html[data-theme="dark"] .sug { background:#0f1624; border-color:#3b4558; color:#f1f5f9; }
+  html[data-theme="dark"] .sug div:hover { background:#1e2a44; }
+  html[data-theme="dark"] .sug-count { background:#161c28; color:#aab4c3; }
+  html[data-theme="dark"] .seg button, html[data-theme="dark"] .e-actions button, html[data-theme="dark"] .pbtn,
+  html[data-theme="dark"] .log-btns a, html[data-theme="dark"] .toolbar button {
+    background:#1e2a44; color:#c7d7f5; border-color:#2f3d5c; }
+  html[data-theme="dark"] .seg button.on { background:#2c5cc5; color:#fff; border-color:#2c5cc5; }
+  html[data-theme="dark"] .w-bottom { background:rgba(11,18,32,.96); border-top-color:#2a3446; }
+  html[data-theme="dark"] .toolbar { background:rgba(15,22,36,.96); border-bottom-color:#2a3446; }
+  html[data-theme="dark"] .big-btn { background:#2c5cc5; }
+  html[data-theme="dark"] #pdf-busy { background:rgba(11,18,32,.88); color:#f1f5f9; }
+  html[data-theme="dark"] .inapp-warn, html[data-theme="dark"] .preview-bar { background:#3a2a12; border-color:#8a5a12; color:#fcd9a0; }
+  html[data-theme="dark"] .w-sig canvas { background:#fafafa; }
+  html[data-theme="dark"] .e-h { border-bottom-color:#3b5998; }
+  html[data-theme="dark"] .e-h b { color:#9db8f0; }
+  html[data-theme="dark"] .e-h span { color:#aab4c3; }
+  html[data-theme="dark"] .e-sub2 { color:#9db8f0; }
+  html[data-theme="dark"] .e-sub2 .en { color:#8a95a8; }   /* لوحة التوقيع تبقى فاتحة ليظهر الحبر */
+  @media print { html[data-theme="dark"] body { background:#fff; color:#111; } }
+
+  /* ===== التصميم الموحد (ألوان auth.js --nw-*) ===== */
+  body,body.mode-entry,body.mode-log,body.landing-on,html[data-theme="dark"] body{background:var(--nw-bg,#eef2f8);font-family:var(--nw-font,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif);-webkit-font-smoothing:antialiased}
+  html[data-theme="dark"] body{color:var(--nw-ink)}
+  .entry .e-top .e-title,.entry .e-top .e-sub,.entry .e-top .e-repno,.e-ver,.log-count{text-shadow:none!important}
+  .entry .e-top .e-title{color:var(--nw-ink,#13274f)!important}
+  .entry .e-top .e-sub,.entry .e-top .e-repno,.e-ver,.log-count{color:var(--nw-muted,#64748b)!important}
+  .e-card,.log-item,.landing-card,.modal-card,html[data-theme="dark"] .e-card,html[data-theme="dark"] .log-item,html[data-theme="dark"] .landing-card,html[data-theme="dark"] .modal-card{background:var(--nw-card,#fff);border:1px solid var(--nw-line,#e5e7eb);box-shadow:var(--nw-shadow,0 1px 2px rgba(15,23,42,.06))!important;color:var(--nw-ink)}
+  .e-h,html[data-theme="dark"] .e-h{border-bottom:2px solid var(--nw-line)!important;position:relative}
+  .e-h::after{content:"";position:absolute;bottom:-2px;inset-inline-start:0;width:64px;height:2px;background:var(--nw-acc,#f28c28)}
+  .e-h b,html[data-theme="dark"] .e-h b{color:var(--nw-ink,#13274f);font-size:18px}
+  .e-h span{color:var(--nw-muted);font-size:13px}
+  .e-sub2,html[data-theme="dark"] .e-sub2{color:var(--nw-ink)}
+  .e-f>label,html[data-theme="dark"] .e-f>label{color:var(--nw-muted);font-size:14px;font-weight:600}
+  .e-actions button{border-radius:12px;background:var(--nw-card,#fff);color:var(--nw-muted);border:1px solid var(--nw-line);box-shadow:var(--nw-shadow);font-weight:700;font-size:16px;padding:14px 8px}
+  .e-actions button.main,html[data-theme="dark"] .e-actions button.main{background:var(--nw-navy,#13274f);color:#fff;border-color:transparent}
+  .wi,.wcombo{border-radius:10px;border-color:var(--nw-line,#d6d9de);background:var(--nw-card,#fff);color:var(--nw-ink)}
+  .wcombo .wi{background:transparent}
+  select.wi{background-color:var(--nw-soft,#f1f5f9)}
+  .seg button{border-radius:10px;border-color:var(--nw-line);background:var(--nw-card);color:var(--nw-ink)}
+  .seg button.on{background:var(--nw-navy,#13274f);border-color:transparent}
+  .dchk{color:var(--nw-ink)}
+  .w-sig{border-color:var(--nw-line);border-radius:12px}
+  .w-sig-name b{color:var(--nw-ink)}
+  .big-btn{background:var(--nw-navy,#13274f);border-radius:12px}
+  .big-btn.wa{background:#25D366}
+  .w-bottom{background:color-mix(in srgb,var(--nw-bg,#eef2f8) 92%,transparent);border-top:1px solid var(--nw-line)}
+  .toolbar{background:var(--nw-card,#fff)!important;border-bottom-color:var(--nw-line)!important}
+  .log-bus{color:var(--nw-ink)}
+  /* ===== توسيع الصفحة على الشاشات الكبيرة ===== */
+  .entry{max-width:none}
+  @media (min-width:1000px){
+    #entry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;align-items:start}
+    #entry>*{grid-column:1/-1}
+    #entry>.e-card{grid-column:auto;align-self:stretch}
+    #entry>.e-actions{max-width:640px;width:100%;justify-self:center}
+    .w-bottom .big-btn{max-width:640px}
+    #logview .log-list,#log-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+  }
+</style>
+</head>
+<body>
+
+<div id="pdf-busy"><span data-ar="جاري إنشاء ملف PDF..." data-en="Creating PDF...">جاري إنشاء ملف PDF...</span></div>
+<div class="toolbar">
+  <div id="stepper" class="stepper"></div>
+  <!-- زر اللغة في الصفحة الرئيسية فقط — البرنامج يتبعها -->
+  <button id="btn-ar" type="button" style="display:none">العربية</button>
+  <button id="btn-en" type="button" style="display:none">English</button>
+  <span class="sp"></span>
+  <span id="app-ver" style="font-size:11px;color:#999">v4.8</span>
+  <span id="save-note"></span>
+  <button id="btn-new" type="button" data-ar="تقرير جديد" data-en="New report">تقرير جديد</button>
+  <button id="btn-open" type="button">📂 <span data-ar="فتح تقرير PDF" data-en="Open report PDF">فتح تقرير PDF</span></button>
+  <input type="file" id="open-input" accept="application/pdf,.pdf" style="display:none">
+  <button id="btn-print" type="button" data-ar="طباعة" data-en="Print">طباعة</button>
+  <button id="btn-pdf" type="button" data-ar="حفظ نسخة PDF" data-en="Save PDF copy">حفظ نسخة PDF</button>
+  <button id="btn-send" type="button" class="primary"></button>
+</div>
+
+<div id="landing" class="landing" style="display:none">
+  <div class="landing-card">
+    <div class="landing-icon">📩</div>
+    <h2 id="landing-title"></h2>
+    <div id="landing-spin" class="spin" style="display:none"></div>
+    <p id="landing-sub"></p>
+    <div id="inapp-warn" class="inapp-warn" style="display:none">
+      <b data-ar="⚠️ الرابط مفتوح داخل تطبيق (مثل Adobe أو الواتساب)" data-en="⚠️ This link is open inside another app (e.g. Adobe or WhatsApp)">⚠️ الرابط مفتوح داخل تطبيق (مثل Adobe أو الواتساب)</b><br>
+      <span data-ar="هذا المتصفح الداخلي غالباً ما يسمح باختيار الملفات. افتح الرابط في Chrome:" data-en="This built-in browser usually can't pick files. Open the link in Chrome:">هذا المتصفح الداخلي غالباً ما يسمح باختيار الملفات. افتح الرابط في Chrome:</span>
+    </div>
+    <button type="button" id="open-chrome" class="big-btn chrome" style="display:none">🌐 <span data-ar="فتح في متصفح Chrome" data-en="Open in Chrome">فتح في متصفح Chrome</span></button>
+    <p id="chrome-manual" class="landing-hint" style="display:none" data-ar="إذا ما انفتح: اضغط على ⋮ أعلى الشاشة ← «فتح في المتصفح» أو «فتح في Chrome». أو انسخ الرابط والصقه في Chrome." data-en="If it doesn't open: tap ⋮ at the top → “Open in browser” / “Open in Chrome”, or copy the link and paste it in Chrome.">إذا ما انفتح: اضغط على ⋮ أعلى الشاشة ← «فتح في المتصفح» أو «فتح في Chrome».</p>
+    <button type="button" id="copy-link" class="pbtn" style="display:none;margin:0 auto 14px" data-ar="نسخ الرابط" data-en="Copy link">نسخ الرابط</button>
+    <button type="button" id="landing-pick" class="big-btn">📂 <span data-ar="اختر ملف التقرير المرفق" data-en="Choose the attached report file">اختر ملف التقرير المرفق</span></button>
+    <p class="landing-hint" data-ar="اختر ملف الـ PDF اللي وصلك مع هذا الرابط في الواتساب. في الآيفون: اضغط على الملف في المحادثة ← مشاركة ← حفظ في الملفات، ثم اختره من هنا." data-en="Pick the PDF that came with this link on WhatsApp. On iPhone: tap the file in the chat → Share → Save to Files, then choose it here.">اختر ملف الـ PDF اللي وصلك مع هذا الرابط في الواتساب.</p>
+  </div>
+</div>
+
+<div id="send-modal" class="modal" style="display:none">
+  <div class="modal-card">
+    <h3 id="sm-title"></h3>
+    <ol class="sm-steps">
+      <li id="sm-step1"></li>
+      <li id="sm-step2"></li>
+    </ol>
+    <textarea id="sm-text" class="sm-text" readonly dir="auto"></textarea>
+    <div class="sm-actions">
+      <button type="button" id="sm-wa" class="big-btn wa">🟢 <span data-ar="إرسال عبر واتساب (الرسالة + ملف PDF)" data-en="Send via WhatsApp (message + PDF)">إرسال عبر واتساب (الرسالة + ملف PDF)</span></button>
+      <button type="button" id="sm-copy" class="pbtn" data-ar="نسخ الرسالة" data-en="Copy message">نسخ الرسالة</button>
+      <button type="button" id="sm-file" class="pbtn" data-ar="تنزيل الملف مرة أخرى" data-en="Download file again">تنزيل الملف مرة أخرى</button>
+    </div>
+    <button type="button" id="sm-done" class="pbtn sm-done" data-ar="تم الإرسال — بدء تقرير جديد" data-en="Sent — start a new report">تم الإرسال — بدء تقرير جديد</button>
+  </div>
+</div>
+
+<div id="entry" class="entry" style="display:none">
+  <div class="e-top">
+    <div class="e-logo"><img src="logo.png?v=1" alt="Northwest Bus"></div>
+    <div class="e-title">تقرير حادث</div>
+    <div class="e-sub">Accident Report</div>
+    <div class="e-repno">رقم التقرير <bdi dir="ltr" id="w-repno"></bdi></div>
+  </div>
+  <div class="e-actions">
+    <button type="button" id="w-new" class="main">تقرير جديد</button>
+    <button type="button" id="w-log">سجل التقارير</button>
+  </div>
+
+  <section class="e-card">
+    <div class="e-h"><b>1- بيانات الحادث</b><span>Accident Information</span></div>
+    <div class="e-grid">
+      <div class="e-f e-full"><label>رقم الحافلة <span class="en">Bus No.</span> <i class=req>*</i></label><div class="sug-wrap"><div class="combo wcombo"><input class="wi" type="text" id="w-bus" placeholder="اختر أو اكتب رقم الحافلة" inputmode="numeric" autocomplete="off"><span class="combo-arrow" id="w-bus-arrow">▾</span></div><div class="sug" id="w-bus-sug"></div></div></div>
+      <div class="e-f e-full"><label>عدد السائقين المتسببين <span class="en">Drivers at fault</span> <i class=req>*</i></label><div class="seg" id="w-count"><button type="button" data-v="1" class="on">سائق واحد</button><button type="button" data-v="2">سائقين</button></div></div>
+      <div class="e-full e-sub2">السائق المتسبب الأول <span class="en">1st Driver</span></div>
+      <div class="e-f e-full"><label>اسم السائق <span class="en">Driver Name</span> <i class=req>*</i></label><div class="sug-wrap"><div class="combo wcombo"><input class="wi" id="w1-name" autocomplete="off" placeholder="اختر من القائمة"><span class="combo-arrow" id="w1-arrow">▾</span></div><div class="sug" id="w1-sug"></div></div></div>
+      <div class="e-f e-full"><label>رقم الإقامة <span class="en">Iqama Number</span></label><input class="wi" type="text" id="w1-id" placeholder="مثال: 2xxxxxxxxx" inputmode="numeric"></div>
+      <div class="e-full e-grid" id="w-d2-field" style="display:none">
+      <div class="e-full e-sub2">السائق المتسبب الثاني <span class="en">2nd Driver</span></div>
+      <div class="e-f e-full"><label>اسم السائق <span class="en">Driver Name</span> <i class=req>*</i></label><div class="sug-wrap"><div class="combo wcombo"><input class="wi" id="w2-name" autocomplete="off" placeholder="اختر من القائمة"><span class="combo-arrow" id="w2-arrow">▾</span></div><div class="sug" id="w2-sug"></div></div></div>
+      <div class="e-f e-full"><label>رقم الإقامة <span class="en">Iqama Number</span></label><input class="wi" type="text" id="w2-id" placeholder="مثال: 2xxxxxxxxx" inputmode="numeric"></div>
+      </div>
+      <div class="e-f e-full"><label>موقع الحادث <span class="en">Accident Location</span> <i class=req>*</i></label><input class="wi" type="text" id="w-loc" placeholder="مثال: طريق جدة – مكة"></div>
+      <div class="e-f e-full"><label>رقم تقرير نجم / المرور <span class="en">Najm / Traffic Report No.</span></label><input class="wi" type="text" id="w-najm" placeholder="اتركه فارغاً إذا لا يوجد"><small class="w-hint">إذا تُرك فارغاً يُكتب في التقرير «لا يوجد»</small></div>
+      <div class="e-f e-full"><label>اسم المباشر <span class="en">Supervisor Name</span> <i class=req>*</i></label><input class="wi" type="text" id="w-sup" placeholder="اسم مباشر الحالة"></div>
+    </div>
+  </section>
+
+  <section class="e-card">
+    <div class="e-h"><b>2- تفاصيل الحادث</b><span>Accident Details</span></div>
+    <div class="e-grid">
+      <div class="e-f"><label>التاريخ <span class="en">Date</span> <i class=req>*</i></label><input class="wi" type="date" id="w-date" placeholder=""></div>
+      <div class="e-f"><label>الوقت <span class="en">Time</span></label><input class="wi" type="time" id="w-time" placeholder=""></div>
+      <div class="e-f e-full"><label>الموقع / الكراج <span class="en">Location / Depot</span></label><select class="wi" id="w-garage"></select><input class="wi" type="text" id="w-garage-other" placeholder="اكتب موقع الكراج" style="display:none;margin-top:8px"></div>
+      <div class="e-f"><label>رقم اللوحة <span class="en">Plate No.</span></label><input class="wi" type="text" id="w-plate" placeholder="رقم اللوحة"></div>
+      <div class="e-f"><label>الفئة <span class="en">Category</span></label><input class="wi" type="text" id="w-cat" placeholder="الفئة"></div>
+      <div class="e-f"><label>كيلومتر الحافلة <span class="en">Odometer (km)</span></label><input class="wi" type="text" id="w-km" placeholder="مثال: 245000" inputmode="numeric"></div>
+      <div class="e-f"><label>إرسال للورشة <span class="en">Sent to Workshop</span></label><input class="wi" type="date" id="w-workshop" placeholder=""></div>
+    </div>
+  </section>
+
+  <section class="e-card">
+    <div class="e-h"><b>3- مكان الضرر</b><span>Damage Area</span></div>
+    <div class="dchk-list" id="w-dmg"></div>
+    <div class="e-sub2">حدّد مكان الضرر على صورة الحافلة <span class="en">Mark the damage on the picture</span></div>
+    <div id="w-diagram-slot"></div>
+  </section>
+
+  <section class="e-card">
+    <div class="e-h"><b>4- وصف الحادث</b><span>Accident Description</span></div>
+      <div class="e-f"><label>وصف الحادث <span class="en">Description</span></label><textarea class="wi" id="w-desc" rows="4" dir="auto" placeholder="اكتب ما حدث باختصار"></textarea></div>
+      <div class="e-f"><label>السبب <span class="en">Cause</span></label><input class="wi" type="text" id="w-cause" placeholder="سبب الحادث"></div>
+      <div class="e-f"><label>نسبة الخطأ (تقييم مبدئي) <span class="en">Fault %</span></label><div class="seg seg5" id="w-fault"></div><div style="font-size:12.5px;color:#777;margin-top:6px">تقدير مبدئي من المباشر — النسبة النهائية تحددها إدارة الأسطول <span class="en">Final % is set by Fleet Management</span></div></div>
+  </section>
+
+  <section class="e-card">
+    <div class="e-h"><b>5- صور الحادث</b><span>Accident Photos</span></div>
+    <div id="w-photo-slot"></div>
+    <div style="height:12px"></div>
+  </section>
+
+  <section class="e-card">
+    <div class="e-h"><b>6- التواقيع</b><span>Signatures</span></div>
+    <div class="w-sigs">
+      <div class="w-sig" data-for="d1"><div class="w-sig-name">السائق المتسبب الأول: <b class="nm"></b></div><canvas></canvas><button type="button" class="pbtn w-sig-clear">مسح</button></div>
+      <div class="w-sig" data-for="d2"><div class="w-sig-name">السائق المتسبب الثاني: <b class="nm"></b></div><canvas></canvas><button type="button" class="pbtn w-sig-clear">مسح</button></div>
+      <div class="w-sig" data-for="sup"><div class="w-sig-name">مباشر الحالة: <b class="nm"></b></div><canvas></canvas><button type="button" class="pbtn w-sig-clear">مسح</button></div>
+    </div>
+    <div style="height:14px"></div>
+  </section>
+  <div class="e-ver" id="e-ver"></div>
+
+  <div class="w-bottom">
+    <button type="button" id="w-preview" class="big-btn">🟢 إرسال التقرير عبر واتساب</button>
+  </div>
+</div>
+
+<div id="pin-modal" class="modal" style="display:none">
+  <div class="modal-card pin-card">
+    <div class="pin-ico">🔒</div>
+    <h3>سجل التقارير <span class="en">Reports Log</span></h3>
+    <p class="pin-sub">أدخل الرقم السري لعرض السجل</p>
+    <input id="pin-input" class="wi pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="••••">
+    <div id="pin-err" class="pin-err"></div>
+    <div class="pin-actions">
+      <button type="button" id="pin-cancel" class="pbtn">إلغاء</button>
+      <button type="button" id="pin-ok" class="big-btn">دخول</button>
+    </div>
+  </div>
+</div>
+
+<div id="logview" class="entry" style="display:none">
+  <div class="e-top">
+    <div class="e-title">سجل التقارير</div>
+    <div class="e-sub">Reports Log</div>
+  </div>
+  <div class="e-actions" style="grid-template-columns:1fr">
+    <button type="button" id="log-back" class="main">➜ رجوع</button>
+  </div>
+  <div class="e-card log-tools">
+    <input id="log-search" class="wi" placeholder="بحث: رقم الحافلة، السائق، رقم التقرير">
+    <div class="seg log-filter" id="log-filter">
+      <button type="button" data-f="all" class="on">الكل</button>
+      <button type="button" data-f="2">الصيانة</button>
+      <button type="button" data-f="3">الأسطول</button>
+      <button type="button" data-f="4">مكتمل</button>
+    </div>
+    <div class="log-count" id="log-count"></div>
+  </div>
+  <div id="log-list"></div>
+  <button type="button" id="log-lock" class="pbtn log-lock">🔒 قفل السجل</button>
+</div>
+
+<div id="preview-bar" class="preview-bar" style="display:none">
+  <span data-ar="👁️ معاينة التقرير — راجع البيانات ثم أرسل" data-en="👁️ Report preview — review, then send">👁️ معاينة التقرير — راجع البيانات ثم أرسل</span>
+  <button type="button" id="btn-edit" class="pbtn" data-ar="✏️ تعديل البيانات" data-en="✏️ Edit details">✏️ تعديل البيانات</button>
+</div>
+
+<div class="page" id="report">
+<table class="f">
+  <colgroup><col style="width:17%"><col style="width:16%"><col style="width:17%"><col style="width:17%"><col style="width:16%"><col style="width:17%"></colgroup>
+  <tr>
+    <td class="h" colspan="2"><span data-ar="رقم تشغيل الحافلة" data-en="Bus fleet number">رقم تشغيل الحافلة</span></td>
+    <td class="logo-cell" colspan="4" rowspan="2"><img src="logo.png?v=1" alt="Northwest Bus"></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="ylw">
+      <input class="c" id="bus-no" list="bus-list" autocomplete="off" style="text-align:center;font-weight:700;font-size:15px">
+      <datalist id="bus-list"></datalist>
+    </td>
+  </tr>
+  <tr>
+    <td class="h" data-ar="تقرير حادث" data-en="Accident Report">تقرير حادث</td>
+    <td colspan="2" style="text-align:center"><input class="c" id="report-no" style="text-align:center;font-weight:700" readonly></td>
+    <td class="h" data-ar="تاريخ التقرير" data-en="Report date">تاريخ التقرير</td>
+    <td colspan="2"><input class="c" type="date" id="report-date"></td>
+  </tr>
+  <tr id="status-row">
+    <td class="lbl" data-ar="حالة التقرير" data-en="Report status">حالة التقرير</td>
+    <td colspan="5" id="status-cell"></td>
+  </tr>
+
+  <tr>
+    <td class="lbl" data-ar="اسم السائق المتسبب الأول" data-en="1st driver name">اسم السائق المتسبب الأول</td>
+    <td colspan="2"><div class="sug-wrap"><div class="combo"><input class="c" id="d1-name" autocomplete="off" data-ph-ar="ابحث بالاسم أو الإقامة" data-ph-en="Search name or Iqama"><span class="combo-arrow no-print" id="d1-arrow">▾</span></div><div class="sug" id="d1-sug"></div></div></td>
+    <td class="h" data-ar="موقع الحادث" data-en="Accident location">موقع الحادث</td>
+    <td colspan="2"><input class="c" id="location"></td>
+  </tr>
+  <tr>
+    <td class="lbl ylw" data-ar="رقم الهوية" data-en="ID / Iqama">رقم الهوية</td>
+    <td colspan="2" class="ylw"><input class="c" id="d1-id"></td>
+    <td class="h" data-ar="رقم تقرير نجم أو المرور" data-en="Najm / Traffic report no.">رقم تقرير نجم أو المرور</td>
+    <td colspan="2"><input class="c" id="najm-no"></td>
+  </tr>
+  <tr>
+    <td class="lbl" data-ar="اسم السائق المتسبب الثاني" data-en="2nd driver name">اسم السائق المتسبب الثاني</td>
+    <td colspan="2"><div class="sug-wrap"><div class="combo"><input class="c" id="d2-name" autocomplete="off" data-ph-ar="اختياري — ابحث أو اكتب الاسم" data-ph-en="Optional — search or type"><span class="combo-arrow no-print" id="d2-arrow">▾</span></div><div class="sug" id="d2-sug"></div></div></td>
+    <td class="h" data-ar="اسم المباشر" data-en="Supervisor name">اسم المباشر</td>
+    <td colspan="2"><input class="c" id="supervisor"></td>
+  </tr>
+  <tr>
+    <td class="lbl ylw" data-ar="رقم الهوية" data-en="ID / Iqama">رقم الهوية</td>
+    <td colspan="2" class="ylw"><input class="c" id="d2-id"></td>
+    <td class="lbl" data-ar="وقت الحادث" data-en="Accident time">وقت الحادث</td>
+    <td colspan="2"><input class="c" type="time" id="acc-time"></td>
+  </tr>
+  <tr>
+    <td class="h" data-ar="تاريخ الحادث" data-en="Accident date">تاريخ الحادث</td>
+    <td><input class="c" type="date" id="acc-date"></td>
+    <td class="lbl" data-ar="رقم اللوحة" data-en="Plate no.">رقم اللوحة</td>
+    <td><input class="c" id="plate"></td>
+    <td class="lbl" data-ar="الفئة" data-en="Category">الفئة</td>
+    <td><input class="c" id="category"></td>
+  </tr>
+  <tr>
+    <td class="h" data-ar="موقع الكراج" data-en="Garage location">موقع الكراج</td>
+    <td colspan="2"><select class="c" id="garage"></select></td>
+    <td colspan="3"><input class="c" id="garage-other" style="display:none" data-ph-ar="اكتب موقع الكراج" data-ph-en="Type the garage location"></td>
+  </tr>
+  <tr>
+    <td class="h" colspan="3" data-ar="مكان الضرر" data-en="Damage area">مكان الضرر</td>
+    <td class="h" data-ar="كيلومتر الحافلة" data-en="Bus odometer (km)">كيلومتر الحافلة</td>
+    <td colspan="2"><input class="c" id="km" inputmode="numeric"></td>
+  </tr>
+  <tbody id="damage-grid"></tbody>
+  <tr>
+    <td colspan="6">
+      <div class="diagram" id="diagram"><img src="diagram.jpg?v=1" alt="bus"></div>
+      <p class="hint" data-ar="اضغط على مكان الضرر في الصورة لوضع علامة ✗ — اضغط على العلامة لحذفها" data-en="Tap the damaged spot to place an ✗ — tap a mark to remove it">اضغط على مكان الضرر في الصورة لوضع علامة ✗ — اضغط على العلامة لحذفها</p>
+      <div class="diag-tools"><button type="button" id="x-undo" data-ar="تراجع" data-en="Undo">تراجع</button><button type="button" id="x-clear" data-ar="مسح العلامات" data-en="Clear marks">مسح العلامات</button></div>
+    </td>
+  </tr>
+  <tr><td class="sec" colspan="6" data-ar="وصف الحادث" data-en="Accident description">وصف الحادث</td></tr>
+  <tr><td colspan="6"><textarea class="c" id="desc" rows="3" dir="auto"></textarea></td></tr>
+  <tr>
+    <td class="lbl" data-ar="تاريخ إرسال التقرير للورشة" data-en="Sent to workshop on">تاريخ إرسال التقرير للورشة</td>
+    <td colspan="2"><input class="c" type="date" id="workshop-date"></td>
+    <td colspan="3">
+      <div style="display:flex;gap:18px;justify-content:center">
+        <label class="pct"><input type="radio" name="repair" value="done"><span data-ar="تم الإصلاح" data-en="Repaired">تم الإصلاح</span></label>
+        <label class="pct"><input type="radio" name="repair" value="not"><span data-ar="لم يتم الإصلاح" data-en="Not repaired">لم يتم الإصلاح</span></label>
+      </div>
+    </td>
+  </tr>
+  <tr id="fault0-row">
+    <td class="lbl" data-ar="نسبة الخطأ المبدئية (المباشر)" data-en="Preliminary fault % (Supervisor)">نسبة الخطأ المبدئية (المباشر)</td>
+  </tr>
+  <tr id="fault-row">
+    <td class="lbl" data-ar="نسبة الخطأ النهائية (إدارة الأسطول)" data-en="Final fault % (Fleet Management)">نسبة الخطأ النهائية (إدارة الأسطول)</td>
+  </tr>
+  <tr>
+    <td class="h" data-ar="السبب" data-en="Cause">السبب</td>
+    <td colspan="5"><input class="c" id="cause"></td>
+  </tr>
+  <tr><td class="sec" colspan="6" data-ar="تقرير إدارة الصيانة" data-en="Maintenance department report">تقرير إدارة الصيانة</td></tr>
+  <tr><td colspan="6"><textarea class="c ruled" id="maint" rows="5" dir="auto"></textarea></td></tr>
+  <tr class="maint-sign">
+    <td class="lbl" data-ar="اسم مسؤول الصيانة" data-en="Maintenance officer">اسم مسؤول الصيانة</td>
+    <td colspan="2"><input class="c" id="maint-name" data-ph-ar="اكتب الاسم" data-ph-en="Name"></td>
+    <td class="lbl" data-ar="التوقيع" data-en="Signature">التوقيع</td>
+    <td class="sig-box sig-inline" colspan="2" data-label="التوقيع" data-sig="maint"></td>
+  </tr>
+  <tr>
+    <td class="lbl" data-ar="تكلفة الإصلاح (ريال)" data-en="Repair cost (SAR)">تكلفة الإصلاح (ريال)</td>
+    <td colspan="2"><input class="c" id="cost" inputmode="decimal"></td>
+    <td class="lbl" data-ar="يتحمل السائق (ريال)" data-en="Driver pays (SAR)">يتحمل السائق (ريال)</td>
+    <td colspan="2"><input class="c" id="driver-cost" readonly style="font-weight:700"></td>
+  </tr>
+  <tr><td class="sec" colspan="6" data-ar="قرار إدارة الأسطول" data-en="Fleet management decision">قرار إدارة الأسطول</td></tr>
+  <tr><td colspan="6"><textarea class="c ruled" id="decision" rows="5" dir="auto"></textarea></td></tr>
+  <tr id="share-row">
+    <td class="lbl" data-ar="يتحمل السائق من قيمة التكلفة" data-en="Driver's share of cost">يتحمل السائق من قيمة التكلفة</td>
+  </tr>
+  <tr>
+    <td class="h" data-ar="السائق المتسبب الأول" data-en="1st driver">السائق المتسبب الأول</td>
+    <td class="h" data-ar="السائق المتسبب الثاني" data-en="2nd driver">السائق المتسبب الثاني</td>
+    <td class="h" data-ar="مباشر الحالة" data-en="Case supervisor">مباشر الحالة</td>
+    <td class="h" colspan="3" data-ar="مسؤول إدارة الأسطول" data-en="Fleet Management officer">مسؤول إدارة الأسطول</td>
+  </tr>
+  <tr id="sig-names">
+    <td class="sig-name-cell"><input class="c sig-name" id="sn-d1" readonly tabindex="-1"></td>
+    <td class="sig-name-cell"><input class="c sig-name" id="sn-d2" readonly tabindex="-1"></td>
+    <td class="sig-name-cell"><input class="c sig-name" id="sn-sup" data-ph-ar="اكتب الاسم" data-ph-en="Name"></td>
+    <td class="sig-name-cell" colspan="3"><input class="c sig-name" id="sn-mgr" data-ph-ar="اكتب الاسم" data-ph-en="Name"></td>
+  </tr>
+  <tr id="sig-row">
+    <td class="sig-box" data-label="التوقيع" data-sig="d1"></td><td class="sig-box" data-label="التوقيع" data-sig="d2"></td><td class="sig-box" data-label="التوقيع" data-sig="sup"></td><td class="sig-box" colspan="3" data-label="التوقيع" data-sig="mgr"></td>
+  </tr>
+</table>
+</div>
+
+<div class="page" id="photo-page">
+  <div class="photo-head">
+    <strong style="font-size:15px" data-ar="صور الحادث" data-en="Accident photos">صور الحادث</strong>
+    <span class="no-print" style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" id="cam-btn" class="pbtn" style="background:var(--red);color:#fff;border-color:var(--red)">📷 <span data-ar="التقاط صورة" data-en="Take photo">التقاط صورة</span></button>
+      <label class="pbtn">
+        🖼️ <span data-ar="إضافة من المعرض" data-en="Add from gallery">إضافة من المعرض</span>
+        <input type="file" id="photo-input" accept="image/*" multiple style="display:none">
+      </label>
+      <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none">
+    </span>
+  </div>
+  <div class="photos" id="photos"></div>
+</div>
+
+<div id="cam-modal" class="no-print" style="display:none">
+  <div class="cam-inner">
+    <video id="cam-video" autoplay playsinline muted></video>
+    <div class="cam-bar">
+      <button type="button" id="cam-close" class="pbtn" data-ar="إغلاق" data-en="Close">إغلاق</button>
+      <button type="button" id="cam-snap" class="cam-snap" aria-label="snap"></button>
+      <button type="button" id="cam-flip" class="pbtn" data-ar="تبديل الكاميرا" data-en="Switch camera">تبديل الكاميرا</button>
+    </div>
+    <div id="cam-count" class="cam-count"></div>
+  </div>
+</div>
+
+<script>
+// ===== Data =====
+// ===== Google Drive storage =====
+// Paste the Web app URL from Google Apps Script (Deploy ▸ Web app) between the quotes.
+// Leave empty to use the file-based flow (send the PDF itself).
+const API_URL='https://script.google.com/macros/s/AKfycbwoZi2ubMcKf6LvpZPpfMAdTnfctAJ7r2PxxqbSKLmZJD-vTt4zZH_WD5I37lPw7Gfyzg/exec';
+let STAGE=1, HISTORY=[], REPORT_KEY='';
+// ===== وضع المرحلة الواحدة: التقرير يُرسل PDF بالواتساب + نسخة في Google Drive =====
+// (مراحل الصيانة والأسطول موقوفة مؤقتاً — لإرجاعها غيّر true إلى false)
+const SINGLE_STAGE=true;
+function authFail(res){ return !!res && res.error==='AUTH'; }
+function authToken(){ return window.NWAuth ? NWAuth.token() : ''; }
+// [iqama, name, nationality, mobile, whatsapp] — محدّثة 2026-11-08 (420 سائق)
+const DRIVER_DATA=[];   // قائمة السائقين تنحمّل من النظام بعد الدخول (بيانات شخصية — ما تنكتب في الصفحة العامة)
+if(window.NWAuth&&NWAuth.drivers) NWAuth.drivers().then(L=>{ DRIVER_DATA.length=0; L.forEach(d=>DRIVER_DATA.push([d[0],d[2],d[3],d[4],d[4]]));  window.dispatchEvent(new Event('nw-drivers')); });
+// Fleet list — fill to auto-complete plate & category from the bus number:
+// [busNo, plate, category, year]
+const FLEET_DATA=[["4001","أ س ص 3879","VIP","2023"],["4002","ا س ص 3880","VIP","2023"],["4003","أ س ص 3884","VIP","2023"],["4004","أ س ص 3885","VIP","2023"],["4005","أ س ص 3886","VIP","2023"],["4006","أ س ص 3887","VIP","2023"],["4007","ا س ص 3888","VIP","2023"],["4008","أ س ص 3889","VIP","2023"],["4009","أ س ص 3890","VIP","2023"],["4010","أ س ص 3891","VIP","2023"],["4011","أ س ص 3892","VIP","2023"],["4012","أ س ص 3893","VIP","2023"],["4013","أ س ص 3894","VIP","2023"],["4014","أ س ص 3895","VIP","2023"],["4015","أ س ص 3896","VIP","2023"],["4101","ا س ص 3814","std","2023"],["4102","ا س ص 3815","std","2023"],["4103","ا س ص 3824","std","2023"],["4104","ا س ص 3825","std","2023"],["4105","ا س ص 3826","std","2023"],["4106","ا س ص 3827","std","2023"],["4107","ا س ص 3828","std","2023"],["4108","ا س ص 3829","std","2023"],["4109","ا س ص 3830","std","2023"],["4110","ا س ص 3831","std","2023"],["4111","ا س ص 3832","std","2023"],["4112","ا س ص 3833","std","2023"],["4113","ا س ص 3834","std","2023"],["4114","ا س ص 3835","std","2023"],["4115","ا س ص 3836","std","2023"],["4116","ا س ص 3837","std","2023"],["4117","ا س ص 3838","std","2023"],["4118","ا س ص 3839","std","2023"],["4119","ا س ص 3840","std","2023"],["4120","ا س ص 3841","std","2023"],["4121","ا س ص 3842","std","2023"],["4122","ا س ص 3843","std","2023"],["4123","ا س ص 3844","std","2023"],["4124","ا س ص 3845","std","2023"],["4125","ا س ص 3846","std","2023"],["4126","ا س ص 3847","std","2023"],["4127","ا س ص 3848","std","2023"],["4128","ا س ص 3849","std","2023"],["4129","ا س ص 3850","std","2023"],["4130","ا س ص 3851","std","2023"],["4131","ا س ص 3852","std","2023"],["4132","ا س ص 3853","std","2023"],["4133","ا س ص 3855","std","2023"],["4134","ا س ص 3856","std","2023"],["4135","ا س ص 3857","std","2023"],["4136","ا س ص 3858","std","2023"],["4137","ا س ص 3859","std","2023"],["4138","ا س ص 3860","std","2023"],["4139","ا س ص 3861","std","2023"],["4140","ا س ص 3862","std","2023"],["4141","ا س ص 3863","std","2023"],["4142","أ س ص 3897","std","2023"],["4143","أ س ص 3898","std","2023"],["4144","ا س ص 3899","std","2023"],["4145","أ س ص 3900","std","2023"],["4146","أ س ص 3901","std","2023"],["4147","أ س ص 3902","std","2023"],["4148","أ س ص 3903","std","2023"],["4149","أ س ص 3904","std","2023"],["4150","أ س ص 3905","std","2023"],["4151","أ س ص 3906","std","2023"],["4152","أ س ص 3907","std","2023"],["4153","ا س ص 3908","std","2023"],["4154","أ س ص 3909","std","2023"],["4155","أ س ص 3910","std","2023"],["4156","أ س ص 3911","std","2023"],["4157","أ س ص 3912","std","2023"],["4158","أ س ص 3913","std","2023"],["4201","ا س ص 3801","wcr","2023"],["4202","ا س ص 3802","wcr","2023"],["4203","ا س ص 3803","wcr","2023"],["4204","ا س ص 3804","wcr","2023"],["4205","ا س ص 3805","wcr","2023"],["4206","ا س ص 3806","wcr","2023"],["4207","ا س ص 3807","wcr","2023"],["4208","أ س ص 3808","wcr","2023"],["4209","ا س ص 3809","wcr","2023"],["4210","ا س ص 3810","wcr","2023"],["4211","ا س ص 3811","wcr","2023"],["4212","ا س ص 3812","wcr","2023"],["4213","ا س ص 3813","wcr","2023"],["4214","ا س ص 3816","wcr","2023"],["4215","ا س ص 3817","wcr","2023"],["4216","ا س ص 3818","wcr","2023"],["4217","ا س ص 3819","wcr","2023"],["4218","ا س ص 3820","wcr","2023"],["4219","ا س ص 3821","wcr","2023"],["4220","ا س ص 3822","wcr","2023"],["4221","ا س ص 3823","wcr","2023"],["4222","ا س ص 3854","wcr","2023"],["4223","ا س ص 3864","wcr","2023"],["4224","ا س ص 3865","wcr","2023"],["4225","ا س ص 3866","wcr","2023"],["4226","ا س ص 3867","wcr","2023"],["4227","ا س ص 3868","wcr","2023"],["4228","ا س ص 3869","wcr","2023"],["4229","ا س ص 3870","wcr","2023"],["4230","ا س ص 3871","wcr","2023"],["4231","ا س ص 3872","wcr","2023"],["4232","ا س ص 3873","wcr","2023"],["4233","ا س ص 3874","wcr","2023"],["4234","ا س ص 3875","wcr","2023"],["4235","ا س ص 3876","wcr","2023"],["4236","أ س ص 3877","wcr","2023"],["4237","أ س ص 3878","wcr","2023"],["4238","أ س ص 3881","wcr","2023"],["4239","أ س ص 3882","wcr","2023"],["4240","ا س ص 3883","wcr","2023"],["4241","أ س ص 3914","wcr","2023"],["4242","أ س ص 3915","wcr","2023"],["4243","أ س ص 3916","wcr","2023"],["4244","أ س ص 3917","wcr","2023"],["4245","أ س ص 3918","wcr","2023"],["4246","أ س ص 3919","wcr","2023"],["4247","أ س ص 3920","wcr","2023"],["4248","أ س ص 3921","wcr","2023"],["4249","أ س ص 3922","wcr","2023"],["4250","أ س ص 3923","wcr","2023"],["4301","أ ص ب 9908","wcr","2025"],["4302","أ ص ب 9904","wcr","2025"],["4303","أ ص ب 9909","wcr","2025"],["4304","أ ص ب 9996","wcr","2025"],["4305","أ ص ب 9913","wcr","2025"],["4306","أ ص ب 9918","wcr","2025"],["4307","أ ص ب 9993","wcr","2025"],["4308","أ ص ب 9901","wcr","2025"],["4309","أ ص ب 9910","wcr","2025"],["4310","أ ص ب 9914","wcr","2025"],["4311","أ ص ب 9903","wcr","2025"],["4312","أ ص ب 9919","wcr","2025"],["4313","أ ص ب 9994","wcr","2025"],["4314","أ ص ب 9902","wcr","2025"],["4315","أ ص ب 9906","wcr","2025"],["4316","أ ص ب 9912","wcr","2025"],["4317","أ ص ب 9916","wcr","2025"],["4318","أ ص ب 9907","wcr","2025"],["4319","أ ص ب 9990","wcr","2025"],["4320","أ ص ب 9997","wcr","2025"],["4321","أ ص ب 9991","wcr","2025"],["4322","أ ص ب 9998","wcr","2025"],["4323","أ ص ب 9917","wcr","2025"],["4324","أ ص ب 9992","wcr","2025"],["4325","أ ص ب 9999","wcr","2025"],["4326","أ ص ب 9905","wcr","2025"],["4327","أ ص ب 9911","wcr","2025"],["4328","أ ص ب 9915","wcr","2025"],["4329","أ ص ب 9920","wcr","2025"],["4330","أ ص ب 9995","wcr","2025"]];
+// Garage locations for the dropdown — edit freely: [Arabic, English]
+const GARAGES=[
+  ["كراج جدة","Jeddah Garage"],["كراج الرياض","Riyadh Garage"],["كراج المدينة المنورة","Madinah Garage"],
+  ["كراج مكة المكرمة","Makkah Garage"],["كراج تبوك","Tabuk Garage"],["كراج جازان","Jazan Garage"],
+  ["كراج خميس مشيط","Khamis Mushait Garage"],["كراج حائل","Hail Garage"],["كراج ينبع","Yanbu Garage"],
+  ["كراج بريدة","Buraydah Garage"],["كراج الطائف","Taif Garage"],["كراج البشائر","Al Bashayer Garage"],
+  ["كراج الشميسي","Al Shumaisi Garage"]
+];
+
+const DAMAGE=[
+  [["front","مقدمة الحافلة","Front"],["headlights","الشمعات الأمامية","Headlights"],["windshield","الزجاج الأمامي","Windshield"],["front_bumper","الصدام الأمامي","Front bumper"]],
+  [["rear","مؤخرة الحافلة","Rear"],["taillights","الأنوار الخلفية","Tail lights"],["rear_glass","الزجاج الخلفي","Rear glass"],["rear_bumper","الصدام الخلفي","Rear bumper"]],
+  [["right","الجنب الأيمن","Right side"],["indicators","الإشارات","Indicators"],["side_glass","زجاج الجوانب","Side glass"],["bumper_corner","ركن الصدام","Bumper corner"]],
+  [["left","الجنب الأيسر","Left side"],["mirrors","المرايات","Mirrors"],["top_glass","الزجاج العلوي","Top glass"],["tires","الكفرات","Tires"]],
+  [["roof","السقف","Roof"],["side_lights","أنوار الجوانب","Side lights"],["door_glass","زجاج الباب","Door glass"],["wheel_cover","غطاء الكفر","Wheel cover"]]
+];
+const PCTS=[100,75,50,25,0];
+
+// اللغة تتبع اختيار الصفحة الرئيسية (hubLang) — وتغييرها هنا يحدّث الصفحة الرئيسية وباقي البرامج
+let LANG=(function(){try{return localStorage.getItem('hubLang')==='en'?'en':'ar'}catch(e){return 'ar'}})();
+const $=id=>document.getElementById(id);
+
+// ===== Build damage grid =====
+(function(){
+  const tb=$('damage-grid');
+  DAMAGE.forEach(row=>{
+    const tr=document.createElement('tr');
+    row.forEach((it,i)=>{
+      const td=document.createElement('td');
+      if(i===0){ td.className='lbl'; }
+      if(i===3) td.colSpan=3;
+      td.innerHTML=`<label class="chk"><span data-ar="${it[1]}" data-en="${it[2]}">${it[1]}</span><input type="checkbox" class="dmg" value="${it[0]}" id="dmg-${it[0]}"></label>`;
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+  ['fault0-row','fault-row','share-row'].forEach(rid=>{
+    const tr=$(rid), name=rid==='fault0-row'?'fault0':rid==='fault-row'?'fault':'share';
+    PCTS.forEach(p=>{
+      const td=document.createElement('td');
+      if(p===0 && false) td.colSpan=1;
+      td.innerHTML=`<label class="pct"><input type="radio" name="${name}" value="${p}"> ${p}%</label>`;
+      tr.appendChild(td);
+    });
+  });
+})();
+
+// ===== Bus image: tap to place X marks =====
+let marks=[]; // [{x,y}] in % of image
+function renderMarks(){
+  const d=$('diagram');
+  d.querySelectorAll('.xmark').forEach(m=>m.remove());
+  marks.forEach((m,i)=>{ const el=document.createElement('span'); el.className='xmark'; el.dataset.i=i; el.style.left=m.x+'%'; el.style.top=m.y+'%'; d.appendChild(el); });
+}
+$('diagram').addEventListener('click',e=>{
+  if(STAGE!==1) return;
+  const mk=e.target.closest('.xmark');
+  if(mk){ marks.splice(Number(mk.dataset.i),1); }
+  else { const r=$('diagram').getBoundingClientRect(); marks.push({x:+((e.clientX-r.left)/r.width*100).toFixed(2), y:+((e.clientY-r.top)/r.height*100).toFixed(2)}); }
+  renderMarks(); autosave();
+});
+$('x-undo').addEventListener('click',()=>{ marks.pop(); renderMarks(); autosave(); });
+$('x-clear').addEventListener('click',()=>{ marks=[]; renderMarks(); autosave(); });
+function syncZones(){ renderMarks(); }
+
+// ===== Driver search =====
+const DRIVERS_SORTED=DRIVER_DATA.slice().sort((a,b)=>a[1].trim().localeCompare(b[1].trim()));
+window.addEventListener('nw-drivers',()=>{ DRIVERS_SORTED.length=0; DRIVER_DATA.slice().sort((a,b)=>a[1].trim().localeCompare(b[1].trim())).forEach(r=>DRIVERS_SORTED.push(r)); });
+function setupDriver(prefix){
+  const inp=$(prefix+'-name'), box=$(prefix+'-sug'), idInp=$(prefix+'-id'), arrow=$(prefix+'-arrow');
+  const hide=()=>{box.style.display='none';box.innerHTML='';};
+  function show(q){
+    if(inp.readOnly) return;
+    q=(q||'').trim().toLowerCase();
+    const m=q?DRIVERS_SORTED.filter(r=>r[0].includes(q)||r[1].toLowerCase().includes(q)):DRIVERS_SORTED;
+    box.innerHTML = m.length
+      ? `<div class="sug-count">${m.length} ${LANG==='ar'?'سائق':'drivers'}</div>`+m.map(r=>`<div data-i="${r[0]}">${r[1]}<br><small>${r[0]} · ${r[2]}</small></div>`).join('')
+      : `<div class="sug-count">${LANG==='ar'?'لا توجد نتائج — يمكنك كتابة الاسم يدوياً':'No match — you can type the name manually'}</div>`;
+    box.style.display='block';
+  }
+  function pick(iq){
+    const r=DRIVER_DATA.find(x=>x[0]===iq); if(!r) return;
+    inp.value=r[1].trim(); idInp.value=r[0]; hide(); autosave();
+  }
+  inp.addEventListener('input',()=>show(inp.value));
+  inp.addEventListener('focus',()=>show(inp.value));
+  idInp.addEventListener('input',()=>{ if(idInp.readOnly) return; const r=DRIVER_DATA.find(x=>x[0]===idInp.value.trim()); if(r){ inp.value=r[1].trim(); autosave(); } });
+  arrow.addEventListener('mousedown',e=>{ e.preventDefault(); if(box.style.display==='block') hide(); else { show(''); inp.focus(); } });
+  box.addEventListener('mousedown',e=>{ const d=e.target.closest('[data-i]'); if(!d) return; e.preventDefault(); pick(d.dataset.i); });
+  inp.addEventListener('keydown',e=>{ if(e.key==='Escape') hide(); if(e.key==='Enter'){ const f=box.querySelector('[data-i]'); if(f){ e.preventDefault(); pick(f.dataset.i);} } });
+  inp.addEventListener('blur',()=>setTimeout(hide,150));
+}
+setupDriver('d1'); setupDriver('d2');
+
+// ===== Fleet lookup =====
+const fleetFind=v=>{ v=(v||'').trim().toLowerCase(); return v?FLEET_DATA.find(x=>x[0].toLowerCase()===v):null; };
+let FLEET_AUTO={};
+function fleetFill(busId,plateId,catId){
+  const r=fleetFind($(busId).value), key=busId;
+  if(r){ $(plateId).value=r[1]; $(catId).value=r[2]; FLEET_AUTO[key]=r[0]; }
+  else if(FLEET_AUTO[key]){ $(plateId).value=''; $(catId).value=''; delete FLEET_AUTO[key]; }
+}
+$('bus-list').innerHTML=FLEET_DATA.map(r=>`<option value="${r[0]}">${r[1]} · ${r[2]}</option>`).join('');
+$('bus-no').addEventListener('input',()=>fleetFill('bus-no','plate','category'));
+function setupBus(busId,sugId,arrowId,plateId,catId){
+  const inp=$(busId), box=$(sugId), arrow=$(arrowId);
+  const hide=()=>{box.style.display='none';box.innerHTML='';};
+  function show(q){
+    if(inp.readOnly) return;
+    q=(q||'').trim().toLowerCase();
+    const m=q?FLEET_DATA.filter(r=>r[0].toLowerCase().includes(q)||r[1].replace(/\s/g,'').includes(q.replace(/\s/g,''))):FLEET_DATA;
+    box.innerHTML = m.length
+      ? `<div class="sug-count">${m.length} ${LANG==='ar'?'حافلة':'buses'}</div>`+m.map(r=>`<div data-b="${r[0]}"><b>${r[0]}</b><br><small><bdi>${r[1]}</bdi> · <bdi>${r[2]}</bdi> · <bdi>${r[3]}</bdi></small></div>`).join('')
+      : `<div class="sug-count">${LANG==='ar'?'رقم غير موجود في القائمة — يمكنك الكتابة يدوياً':'Not in the fleet list — you can type it manually'}</div>`;
+    box.style.display='block';
+  }
+  function pick(b){ inp.value=b; fleetFill(busId,plateId,catId); hide(); inp.classList.remove('bad'); autosave(); }
+  inp.addEventListener('input',()=>{ fleetFill(busId,plateId,catId); show(inp.value); });
+  inp.addEventListener('focus',()=>show(inp.value));
+  arrow.addEventListener('mousedown',e=>{ e.preventDefault(); if(box.style.display==='block') hide(); else { show(''); inp.focus(); } });
+  box.addEventListener('mousedown',e=>{ const d=e.target.closest('[data-b]'); if(!d) return; e.preventDefault(); pick(d.dataset.b); });
+  inp.addEventListener('keydown',e=>{ if(e.key==='Escape') hide(); if(e.key==='Enter'){ const f=box.querySelector('[data-b]'); if(f){ e.preventDefault(); pick(f.dataset.b);} } });
+  inp.addEventListener('blur',()=>setTimeout(hide,150));
+}
+
+// ===== Cost calc =====
+function calcCost(){
+  const cost=parseFloat(($('cost').value||'').replace(/[^\d.]/g,''));
+  const s=document.querySelector('input[name=share]:checked');
+  $('driver-cost').value = (!isNaN(cost) && s) ? (cost*Number(s.value)/100).toLocaleString('en-US',{maximumFractionDigits:2}) : '';
+}
+document.addEventListener('input',e=>{ if(e.target.id==='cost') calcCost(); });
+document.addEventListener('change',e=>{ if(e.target.name==='share') calcCost(); });
+
+// ===== Signatures (keyed: d1, d2, sup, mgr, maint) =====
+const SIG={};
+const sigs=[];
+document.querySelectorAll('#report .sig-box').forEach(td=>{
+  const key=td.dataset.sig;
+  const c=document.createElement('canvas'); td.appendChild(c);
+  const b=document.createElement('button'); b.type='button'; b.className='sig-clear'; b.textContent='×'; td.appendChild(b);
+  const ctx=c.getContext('2d'); let drawing=false;
+  const s={key,c,td,data:'',locked:false};
+  function redraw(){ const r=c.getBoundingClientRect(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.setTransform(2,0,0,2,0,0);
+    if(s.data){ const i=new Image(); i.onload=()=>ctx.drawImage(i,0,0,r.width,r.height); i.src=s.data; } }
+  function size(){ const r=c.getBoundingClientRect(); if(!r.width) return; c.width=r.width*2; c.height=r.height*2; ctx.lineWidth=1.8; ctx.lineCap='round'; ctx.strokeStyle='#0b2a6b'; redraw(); ctx.lineWidth=1.8; ctx.lineCap='round'; ctx.strokeStyle='#0b2a6b'; }
+  const pos=e=>{const r=c.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
+  c.addEventListener('pointerdown',e=>{ if(s.locked) return; drawing=true; c.setPointerCapture(e.pointerId); ctx.beginPath(); ctx.moveTo(...pos(e)); });
+  c.addEventListener('pointermove',e=>{ if(!drawing) return; ctx.lineTo(...pos(e)); ctx.stroke(); });
+  c.addEventListener('pointerup',()=>{ if(!drawing) return; drawing=false; s.data=c.toDataURL('image/png'); autosave(); });
+  b.addEventListener('click',()=>{ if(s.locked) return; s.clear(); autosave(); });
+  s.size=size;
+  s.clear=()=>{ s.data=''; redraw(); };
+  s.set=(url)=>{ s.data=url||''; redraw(); };
+  s.lock=(on)=>{ s.locked=on; c.style.cursor=on?'default':'crosshair'; c.style.touchAction=on?'auto':'none'; b.style.display=on?'none':''; };
+  SIG[key]=s; sigs.push(s);
+  requestAnimationFrame(size);
+});
+window.addEventListener('resize',()=>sigs.forEach(s=>s.size()));
+
+// ===== Photos =====
+let photos=[];
+function renderPhotos(){
+  $('photos').innerHTML=photos.map((p,i)=>`<figure><img src="${p}"><button type="button" data-del="${i}">×</button></figure>`).join('');
+  $('photo-page').classList.toggle('empty', photos.length===0);
+  if(typeof STAGE!=='undefined' && STAGE!==1) document.querySelectorAll('#photos button').forEach(b=>b.style.display='none');
+}
+function stampText(){
+  const d=new Date(), p=n=>String(n).padStart(2,'0');
+  let s=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'  '+p(d.getHours())+':'+p(d.getMinutes());
+  const bus=$('bus-no').value.trim(); if(bus) s+='  |  '+bus;
+  return s;
+}
+// draw a source (img/video) into a downscaled JPEG; optional date/time stamp for camera shots
+function addPhoto(src, w, h, stamp){
+  const max=1920, k=Math.min(1,max/Math.max(w,h));   // دقة أعلى عشان تنقرأ أرقام الحافلات واللوحات
+  const cv=document.createElement('canvas'); cv.width=Math.round(w*k); cv.height=Math.round(h*k);
+  const ctx=cv.getContext('2d'); ctx.drawImage(src,0,0,cv.width,cv.height);
+  if(stamp){
+    const txt=stampText(), fs=Math.max(14,Math.round(cv.width/40));
+    ctx.font='bold '+fs+'px Arial'; const tw=ctx.measureText(txt).width;
+    ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(cv.width-tw-fs*1.2, cv.height-fs*2, tw+fs, fs*1.6);
+    ctx.fillStyle='#ffeb3b'; ctx.textBaseline='middle'; ctx.fillText(txt, cv.width-tw-fs*0.7, cv.height-fs*1.2);
+  }
+  photos.push(cv.toDataURL('image/jpeg',0.86)); renderPhotos();
+}
+function readFiles(files, stamp){
+  [...files].forEach(f=>{
+    const rd=new FileReader();
+    rd.onload=()=>{ const img=new Image(); img.onload=()=>addPhoto(img,img.naturalWidth,img.naturalHeight,stamp); img.src=rd.result; };
+    rd.readAsDataURL(f);
+  });
+}
+$('photo-input').addEventListener('change',e=>{ readFiles(e.target.files,false); e.target.value=''; });
+$('cam-input').addEventListener('change',e=>{ readFiles(e.target.files,true); e.target.value=''; });
+
+// Live camera (works on phones, tablets and laptops over https)
+let camStream=null, camFacing='environment', camShots=0;
+async function openCam(){
+  if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)){ $('cam-input').click(); return; }
+  try{
+    if(camStream) camStream.getTracks().forEach(t=>t.stop());
+    camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:camFacing},width:{ideal:1920},height:{ideal:1080}},audio:false});
+    $('cam-video').srcObject=camStream; $('cam-modal').style.display='flex'; updateCamCount();
+  }catch(err){ $('cam-input').click(); } // permission denied / no camera → system camera picker
+}
+function closeCam(){ if(camStream){camStream.getTracks().forEach(t=>t.stop()); camStream=null;} $('cam-modal').style.display='none'; camShots=0; }
+function updateCamCount(){ $('cam-count').textContent = camShots ? (LANG==='ar'?'تم التقاط '+camShots+' صورة':camShots+' photo(s) taken') : ''; }
+$('cam-btn').addEventListener('click',()=>{ camShots=0; openCam(); });
+$('cam-close').addEventListener('click',closeCam);
+$('cam-flip').addEventListener('click',()=>{ camFacing = camFacing==='environment'?'user':'environment'; openCam(); });
+$('cam-snap').addEventListener('click',()=>{
+  const v=$('cam-video'); if(!v.videoWidth) return;
+  addPhoto(v,v.videoWidth,v.videoHeight,true); camShots++; updateCamCount();
+  v.style.opacity='.3'; setTimeout(()=>v.style.opacity='1',120);
+});
+$('photos').addEventListener('click',e=>{ if(STAGE!==1) return; const d=e.target.dataset.del; if(d!==undefined){photos.splice(Number(d),1);renderPhotos();} });
+
+// ===== Report number & dates =====
+function todayISO(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function newReportNo(){const d=new Date(),p=n=>String(n).padStart(2,'0');const r=Math.random().toString(36).slice(2,4).toUpperCase();return 'ACC-'+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+'-'+r;} // random suffix keeps two reports made in the same minute apart
+
+// ===== Draft autosave (text fields only) =====
+const KEY='nwb_accident_draft_v2', KEY_OLD='nwb_accident_draft_v1';
+function collect(){
+  const o={};
+  document.querySelectorAll('#report input.c, #report textarea.c, #report select.c').forEach(el=>{ if(el.id) o[el.id]=el.value; });
+  o._dmg=[...document.querySelectorAll('.dmg:checked')].map(x=>x.value);
+  o._marks=marks;
+  ['fault0','fault','share','repair'].forEach(n=>{const r=document.querySelector(`input[name=${n}]:checked`); o['_'+n]=r?r.value:null;});
+  return o;
+}
+function restore(o){
+  if(o.garage!=null){ renderGarages(); }
+  Object.keys(o).forEach(k=>{ if(k[0]!=='_' && $(k)) $(k).value=o[k]; });
+  renderGarages();
+  marks=Array.isArray(o._marks)?o._marks:[];
+  (o._dmg||[]).forEach(v=>{const c=$('dmg-'+v); if(c) c.checked=true;});
+  ['fault0','fault','share','repair'].forEach(n=>{ if(o['_'+n]!=null){const r=document.querySelector(`input[name=${n}][value="${o['_'+n]}"]`); if(r) r.checked=true;} });
+  syncZones(); calcCost();
+  if($('sn-sup').value && $('sn-sup').value!==$('supervisor').value) $('sn-sup').dataset.manual='1';
+  syncSigNames();
+}
+let saveT;
+// ===== Names above signatures (linked to the fields at the top) =====
+function syncSigNames(){
+  $('sn-d1').value=$('d1-name').value.trim();
+  $('sn-d2').value=$('d2-name').value.trim();
+  const sup=$('sn-sup');
+  if(!sup.dataset.manual) sup.value=$('supervisor').value.trim();
+}
+$('sn-sup').addEventListener('input',()=>{ $('sn-sup').dataset.manual = $('sn-sup').value.trim() && $('sn-sup').value.trim()!==$('supervisor').value.trim() ? '1' : ''; });
+['d1-name','d2-name','supervisor'].forEach(id=>$(id).addEventListener('input',syncSigNames));
+function autosave(){
+  if(document.body.classList.contains('mode-entry') && typeof pullFromWizard==='function') pullFromWizard();
+  syncSigNames();
+  clearTimeout(saveT);
+  saveT=setTimeout(()=>{
+    let ok=false;
+    try{ localStorage.setItem(KEY, JSON.stringify(getState(true))); ok=true; }
+    catch(e){ try{ localStorage.setItem(KEY, JSON.stringify(getState(false))); ok=true; }catch(e2){} } // too big → save without photos
+    if(ok){ $('save-note').textContent = LANG==='ar'?'تم حفظ المسودة':'Draft saved'; setTimeout(()=>$('save-note').textContent='',1500); }
+  },400);
+}
+document.addEventListener('input',e=>{ if(e.target.closest('#report')) autosave(); });
+document.addEventListener('change',e=>{ if(e.target.closest('#report')) autosave(); });
+
+function clearAll(){
+  document.querySelectorAll('#report select').forEach(s=>s.value='');
+  document.querySelectorAll('#report input, #report textarea').forEach(el=>{ if(el.type==='checkbox'||el.type==='radio') el.checked=false; else el.value=''; });
+  sigs.forEach(s=>s.clear()); photos=[]; marks=[]; $('sn-sup').dataset.manual=''; renderPhotos(); syncZones(); renderGarages();
+}
+function resetForm(){
+  clearAll();
+  $('report-no').value=newReportNo(); $('report-date').value=todayISO();
+  $('acc-date').value=todayISO();
+  STAGE=1; HISTORY=[]; REPORT_KEY=''; PREVIEW=false; applyStage(); pushToWizard(); setView(); applyUserDefaults();
+  try{ if(location.search) history.replaceState(null,'',toolBaseUrl()); }catch(e){}
+  try{localStorage.removeItem(KEY);localStorage.removeItem(KEY_OLD);}catch(e){}
+}
+// Full report state — saved inside the PDF and in the local draft
+function getState(withPhotos){
+  const sg={}; sigs.forEach(s=>{ if(s.data) sg[s.key]=s.data; });
+  return {app:'NWB-accident', v:2, key:REPORT_KEY, preview:PREVIEW, stage:STAGE, history:HISTORY, fields:collect(), sigs:sg, photos: withPhotos===false?[]:photos};
+}
+function setState(st){
+  clearAll();
+  restore(st.fields||{});
+  STAGE=Number(st.stage)||1; HISTORY=Array.isArray(st.history)?st.history:[]; REPORT_KEY=st.key||''; PREVIEW=!!st.preview;
+  photos=Array.isArray(st.photos)?st.photos:[]; renderPhotos();
+  Object.keys(st.sigs||{}).forEach(k=>{ if(SIG[k]) SIG[k].set(st.sigs[k]); });
+  applyStage(); pushToWizard(); setView();
+}
+$('btn-new').addEventListener('click',()=>{
+  if(confirm(LANG==='ar'?'بدء تقرير جديد؟ سيتم مسح البيانات الحالية.':'Start a new report? Current data will be cleared.')) resetForm();
+});
+
+// ===== Print / PDF =====
+$('btn-print').addEventListener('click',()=>{
+  const old=document.title;
+  document.title='Accident-Report-'+($('report-no').value||'')+($('bus-no').value?'-'+$('bus-no').value:'');
+  document.querySelectorAll('textarea.c').forEach(t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px';});
+  document.querySelectorAll('#report input.c').forEach(i=>i.classList.toggle('is-empty',!i.value));
+  window.print();
+  setTimeout(()=>{document.title=old;document.querySelectorAll('.is-empty').forEach(i=>i.classList.remove('is-empty'));},500);
+});
+
+
+// ===== Direct PDF (no printing, no external libraries) =====
+function pdfName(){ return 'Accident-Report-'+($('report-no').value||'')+($('bus-no').value.trim()?'-'+$('bus-no').value.trim().replace(/[^\w\-]+/g,'_'):'')+'.pdf'; }
+function loadImg(src){ return new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=src; }); }
+async function renderReportCanvas(banner){
+  const W=794; // A4 width @96dpi
+  const src=$('report');
+  document.querySelectorAll('textarea.c').forEach(t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px';});
+  const holder=document.createElement('div');
+  holder.className='pdf-mode'; holder.dir=$('html-root').dir; holder.lang=LANG;
+  holder.style.cssText='position:fixed;left:-20000px;top:0;width:'+W+'px;background:#fff';
+  const clone=src.cloneNode(true);
+  // copy live form state into attributes so it survives serialization
+  const sIn=src.querySelectorAll('input,textarea'), cIn=clone.querySelectorAll('input,textarea');
+  sIn.forEach((el,i)=>{
+    const c=cIn[i];
+    if(el.type==='checkbox'||el.type==='radio'){ if(el.checked) c.setAttribute('checked','checked'); else c.removeAttribute('checked'); }
+    else if(el.tagName==='TEXTAREA'){ c.textContent=el.value; c.style.height=el.style.height; }
+    else { c.setAttribute('value',el.value); if(!el.value) c.classList.add('is-empty'); }
+    c.removeAttribute('id'); c.removeAttribute('list');
+    if(c.name) c.name='pdf_'+c.name; // keep the clone's radios out of the live radio groups
+  });
+  // أسماء التوقيع: نص يلتف على سطرين بدل خانة إدخال تقص الاسم الطويل
+  clone.querySelectorAll('input.sig-name').forEach(c=>{ const d=document.createElement('div');
+    d.setAttribute('dir','auto'); d.textContent=c.getAttribute('value')||'';
+    d.style.cssText='text-align:center;font-weight:600;font-size:11px;line-height:1.35;padding:3px 2px;white-space:normal;overflow-wrap:anywhere;min-height:18px';
+    c.replaceWith(d); });
+  const sSel=src.querySelectorAll('select'), cSel=clone.querySelectorAll('select');
+  sSel.forEach((s,i)=>{ const sp=document.createElement('span'); sp.style.cssText='display:block;padding:2px';
+    sp.textContent = s.value && s.value!=='other' ? s.options[s.selectedIndex].text : ''; cSel[i].replaceWith(sp); });
+  clone.querySelectorAll('datalist,.sug').forEach(e=>e.remove());
+  const sCv=src.querySelectorAll('.sig-box canvas'), cCv=clone.querySelectorAll('.sig-box canvas');
+  // التوقيع يؤخذ من البيانات المحفوظة (اللوحة قد تكون مخفية عند الإرسال المباشر من صفحة التعبئة)
+  sCv.forEach((cv,i)=>{ const im=document.createElement('img'); const d=sigs[i]&&sigs[i].data; im.src=d||cv.toDataURL('image/png'); cCv[i].replaceWith(im); });
+  clone.id='report-pdf'; clone.style.display='';
+  if(banner){
+    const bn=document.createElement('div');
+    bn.style.cssText='margin:0 0 6px;padding:9px 10px;border:2px dashed #e31e24;border-radius:8px;background:#fdecec;color:#b00000;text-align:center;font-weight:700;font-size:14px';
+    bn.textContent=banner; clone.insertBefore(bn, clone.firstChild);
+  }
+  holder.appendChild(clone); document.body.appendChild(holder);
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  // Render on a tall canvas, then crop to the real content. (Measuring the page on a phone uses the
+  // mobile layout, which is shorter than the A4 layout — that was cutting off the signature rows.)
+  const H=Math.max(4000, Math.ceil(holder.scrollHeight)*3);
+  const css=[...document.querySelectorAll('style')].map(s=>s.textContent).join('\n');
+  const wrap=document.createElement('div');
+  wrap.setAttribute('xmlns','http://www.w3.org/1999/xhtml');
+  wrap.className='pdf-mode'; wrap.setAttribute('dir',holder.dir); wrap.setAttribute('lang',LANG);
+  wrap.setAttribute('style','width:'+W+'px;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;font-size:13px;color:#1a1a1a');
+  const st=document.createElement('style'); st.textContent=css; wrap.appendChild(st);
+  wrap.appendChild(clone);
+  document.body.removeChild(holder);
+  const xhtml=new XMLSerializer().serializeToString(wrap);
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'"><foreignObject x="0" y="0" width="100%" height="100%">'+xhtml+'</foreignObject></svg>';
+  const img=await loadImg('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg));
+  // pass 1: small preview to find where the content ends
+  const pv=document.createElement('canvas'), q=0.25; pv.width=Math.round(W*q); pv.height=Math.round(H*q);
+  const pctx=pv.getContext('2d');
+  const drawPv=()=>{ pctx.fillStyle='#fff'; pctx.fillRect(0,0,pv.width,pv.height); pctx.drawImage(img,0,0,pv.width,pv.height); };
+  drawPv(); await new Promise(r=>setTimeout(r,250)); drawPv(); // Safari loads embedded images late
+  const d=pctx.getImageData(0,0,pv.width,pv.height).data; let last=0;
+  for(let y=pv.height-1;y>=0 && !last;y--){ for(let x=0;x<pv.width;x++){ const k=(y*pv.width+x)*4; if(d[k]<235||d[k+1]<235||d[k+2]<235){ last=y; break; } } }
+  const CH=Math.min(H, Math.ceil((last+3)/q));
+  // pass 2: full-resolution render of the content area only
+  const S=2, cv=document.createElement('canvas'); cv.width=W*S; cv.height=CH*S;
+  const ctx=cv.getContext('2d');
+  const draw=()=>{ ctx.fillStyle='#fff'; ctx.fillRect(0,0,cv.width,cv.height); ctx.drawImage(img,0,0,W*S,H*S); };
+  draw(); await new Promise(r=>setTimeout(r,150)); draw();
+  return cv;
+}
+async function photoPages(){
+  // A4 @ 200dpi, صورتين في الصفحة (بدل 6) عشان التفاصيل مثل رقم الحافلة تكون واضحة
+  const PW=1654, PH=2339, M=80, GAP=40, COLS=1, ROWS=2, TOP=190;
+  const cw=(PW-2*M-GAP)/COLS, ch=(PH-TOP-M-GAP*(ROWS-1))/ROWS;
+  const pages=[];
+  for(let i=0;i<photos.length;i+=COLS*ROWS){
+    const cv=document.createElement('canvas'); cv.width=PW; cv.height=PH;
+    const ctx=cv.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,PW,PH);
+    ctx.fillStyle='#e31e24'; ctx.fillRect(M,M,PW-2*M,72);
+    ctx.fillStyle='#fff'; ctx.font='bold 40px Tahoma, Arial, sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    const title=(LANG==='ar'?'صور الحادث':'Accident photos')+'  —  '+($('report-no').value||'')+($('bus-no').value?'  |  '+$('bus-no').value:'');
+    ctx.direction=LANG==='ar'?'rtl':'ltr'; ctx.fillText(title,PW/2,M+36);
+    const slice=photos.slice(i,i+COLS*ROWS);
+    for(let j=0;j<slice.length;j++){
+      const im=await loadImg(slice[j]);
+      const col=LANG==='ar'?(COLS-1-(j%COLS)):(j%COLS), row=Math.floor(j/COLS);
+      const x=M+col*(cw+GAP), y=TOP+row*(ch+GAP);
+      const k=Math.min(cw/im.width, ch/im.height), w=im.width*k, h=im.height*k;
+      ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+      ctx.drawImage(im, x+(cw-w)/2, y+(ch-h)/2, w, h);
+      ctx.strokeStyle='#ccc'; ctx.lineWidth=2; ctx.strokeRect(x,y,cw,ch);
+    }
+    pages.push(cv);
+  }
+  return pages;
+}
+function canvasJpegBytes(cv){
+  const b64=cv.toDataURL('image/jpeg',0.9).split(',')[1], bin=atob(b64), u=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  return u;
+}
+// Minimal PDF writer: one full-page JPEG per page, A4 portrait
+function strToB64(s){ const u=new TextEncoder().encode(s); let bin=''; for(let i=0;i<u.length;i+=0x8000) bin+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000)); return btoa(bin); }
+function b64ToStr(b){ const bin=atob(b.replace(/[^A-Za-z0-9+\/=]/g,'')), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return new TextDecoder().decode(u); }
+// Minimal PDF writer. Optional: embedded report data, and a link covering every page (tap anywhere → opens the program)
+function buildPdf(pages, dataB64, linkUrl){
+  const A4W=595.28, A4H=841.89, MAR=18, enc=new TextEncoder();
+  const chunks=[], offsets=[]; let len=0;
+  const push=x=>{ const u=typeof x==='string'?enc.encode(x):x; chunks.push(u); len+=u.length; };
+  push('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  const n=pages.length, pageIds=[], obj=id=>{ offsets[id]=len; push(id+' 0 obj\n'); };
+  pages.forEach((_,i)=>pageIds.push(3+i*3));          // per page: page, contents, image
+  let next=3+n*3;
+  const dataId = dataB64 ? next++ : 0;
+  const annotIds = linkUrl ? pages.map(()=>next++) : [];
+  const total=next;
+  const pdfStr=s=>'('+String(s).replace(/[\\()]/g,m=>'\\'+m)+')';
+  obj(1); push('<< /Type /Catalog /Pages 2 0 R'+(dataId?' /NWBData '+dataId+' 0 R':'')+' >>\nendobj\n');
+  obj(2); push('<< /Type /Pages /Kids ['+pageIds.map(id=>id+' 0 R').join(' ')+'] /Count '+n+' >>\nendobj\n');
+  pages.forEach((cv,i)=>{
+    const pid=3+i*3, cid=pid+1, iid=pid+2, jpg=canvasJpegBytes(cv);
+    const k=Math.min((A4W-2*MAR)/cv.width,(A4H-2*MAR)/cv.height), w=cv.width*k, h=cv.height*k;
+    const x=(A4W-w)/2, y=A4H-MAR-h;
+    const content='q '+w.toFixed(2)+' 0 0 '+h.toFixed(2)+' '+x.toFixed(2)+' '+y.toFixed(2)+' cm /Im0 Do Q';
+    obj(pid); push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+A4W+' '+A4H+'] /Resources << /XObject << /Im0 '+iid+' 0 R >> >> /Contents '+cid+' 0 R'+(linkUrl?' /Annots ['+annotIds[i]+' 0 R]':'')+' >>\nendobj\n');
+    obj(cid); push('<< /Length '+content.length+' >>\nstream\n'+content+'\nendstream\nendobj\n');
+    obj(iid); push('<< /Type /XObject /Subtype /Image /Width '+cv.width+' /Height '+cv.height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpg.length+' >>\nstream\n'); push(jpg); push('\nendstream\nendobj\n');
+  });
+  if(dataId){ // report data travels inside the PDF so the next department can reopen and continue it
+    const body='NWBDATA-BEGIN'+dataB64+'NWBDATA-END';
+    obj(dataId); push('<< /Length '+body.length+' >>\nstream\n'+body+'\nendstream\nendobj\n');
+  }
+  annotIds.forEach(id=>{
+    obj(id); push('<< /Type /Annot /Subtype /Link /Rect [0 0 '+A4W+' '+A4H+'] /Border [0 0 0] /F 4 /A << /Type /Action /S /URI /URI '+pdfStr(linkUrl)+' >> >>\nendobj\n');
+  });
+  const xref=len;
+  let x='xref\n0 '+total+'\n0000000000 65535 f \n';
+  for(let i=1;i<total;i++) x+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';
+  push(x+'trailer\n<< /Size '+total+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+  return new Blob(chunks,{type:'application/pdf'});
+}
+async function deliverFile(blob,name,text){
+  const file=new File([blob],name,{type:'application/pdf'});
+  const isMobile=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if(isMobile && navigator.canShare && navigator.canShare({files:[file]})){
+    try{ const sd={files:[file],title:name}; if(text) sd.text=text; await navigator.share(sd); return 'shared'; }catch(e){ if(e && e.name==='AbortError') return 'aborted'; }
+  }
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+  return 'downloaded';
+}
+let LAST_PDF=null;
+async function makeAndDeliverPdf(tag,text,nextStage){
+  const busy=$('pdf-busy'); busy.style.display='flex';
+  try{
+    const data=strToB64(JSON.stringify(getState(true)));
+    const ar=LANG==='ar', web=/^https?:/.test(location.protocol);
+    const link = nextStage && web ? stageLink(nextStage) : '';
+    const to = nextStage===2 ? (ar?'إدارة الصيانة':'Maintenance') : nextStage===3 ? (ar?'إدارة الأسطول':'Fleet Management') : '';
+    const banner = link ? (ar?'👆 اضغط في أي مكان على هذا الملف لفتح التقرير وإكمال مرحلة: '+to:'👆 Tap anywhere on this file to open the report and complete the stage: '+to) : '';
+    const pages=[await renderReportCanvas(banner), ...(await photoPages())];
+    const blob=buildPdf(pages, data, link);
+    const name=pdfName().replace(/\.pdf$/,'-'+tag+'.pdf'); LAST_PDF={blob,name};
+    return await deliverFile(blob, name, text);
+  }catch(err){
+    console.error(err);
+    alert(LANG==='ar'?'تعذّر إنشاء ملف PDF على هذا الجهاز. جرّب متصفح Chrome أو Safari بآخر تحديث.':'Could not create the PDF on this device. Try the latest Chrome or Safari.');
+    return 'error';
+  }finally{ busy.style.display='none'; }
+}
+async function savePdf(){ await makeAndDeliverPdf(STAGE>3?'final-copy':'copy'); }
+$('btn-pdf').addEventListener('click',savePdf);
+
+
+
+// ===== Workflow: 1 supervisor → 2 maintenance → 3 fleet management → 4 closed =====
+const STAGE_DEF={
+  1:{ids:['bus-no','report-date','d1-name','d1-id','location','najm-no','d2-name','d2-id','supervisor','acc-time','acc-date','plate','category','garage','garage-other','km','desc','workshop-date','cause','sn-sup'], radios:['fault0'], checks:true, sigs:['d1','d2','sup'],
+     ar:'المباشر', en:'Supervisor', send_ar:'إرسال لإدارة الصيانة ➜', send_en:'Send to Maintenance ➜', file:'1-to-maintenance',
+     req:[['bus-no','رقم تشغيل الحافلة','Bus number'],['d1-name','اسم السائق المتسبب الأول','1st driver'],['acc-date','تاريخ الحادث','Accident date'],['supervisor','اسم المباشر','Supervisor name']], reqSig:['sup']},
+  2:{ids:['maint','cost','maint-name'], radios:['repair'], sigs:['maint'],
+     ar:'الصيانة', en:'Maintenance', send_ar:'إرسال لإدارة الأسطول ➜', send_en:'Send to Fleet Management ➜', file:'2-to-fleet',
+     req:[['maint','تقرير إدارة الصيانة','Maintenance report'],['cost','تكلفة الإصلاح','Repair cost'],['maint-name','اسم مسؤول الصيانة','Maintenance officer name']], reqSig:['maint']},
+  3:{ids:['decision','sn-mgr'], radios:['fault','share'], sigs:['mgr'],
+     ar:'إدارة الأسطول', en:'Fleet Management', send_ar:'اعتماد وإغلاق التقرير ✔', send_en:'Approve & close report ✔', file:'3-final',
+     req:[['decision','قرار إدارة الأسطول','Fleet decision'],['sn-mgr','اسم مسؤول إدارة الأسطول','Fleet Management officer name']], reqRadio:[['fault','نسبة الخطأ على السائق','Driver fault %'],['share','نسبة تحمّل السائق من التكلفة',"Driver's cost share"]], reqSig:['mgr']}
+};
+const STATUS_TXT={1:['قيد الإعداد — المباشر','Draft — Supervisor'],2:['بانتظار إدارة الصيانة','Waiting for Maintenance'],3:['بانتظار إدارة الأسطول','Waiting for Fleet Management'],4:['مكتمل ومعتمد','Completed & approved']};
+if(SINGLE_STAGE){
+  STATUS_TXT[1]=['قيد الإعداد','Draft']; STATUS_TXT[4]=['تم إرسال التقرير','Report sent'];
+  STAGE_DEF[1].send_ar='إرسال التقرير ✔'; STAGE_DEF[1].send_en='Send report ✔'; STAGE_DEF[1].file='report';
+}
+function singleMessage(){
+  const ar=LANG==='ar', rep=$('report-no').value, bus=$('bus-no').value.trim(), d=$('d1-name').value.trim(), dt=$('acc-date').value, loc=$('location').value.trim();
+  return ar ? `🚌 تقرير حادث رقم ${rep}\nالحافلة: ${bus}\nالسائق: ${d}\nتاريخ الحادث: ${dt}${loc?'\nالموقع: '+loc:''}\n${faultLine(true)}\nمرفق ملف التقرير (PDF).`
+            : `🚌 Accident report ${rep}\nBus: ${bus}\nDriver: ${d}\nAccident date: ${dt}${loc?'\nLocation: '+loc:''}\n${faultLine(false)}\nThe report PDF is attached.`;
+}
+function fmtNow(){ const d=new Date(),p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+function lockField(el,locked){
+  if(!el) return;
+  const td=el.closest('td');
+  if(el.tagName==='SELECT'){ el.classList.toggle('locked',locked); el.tabIndex=locked?-1:0; }
+  else el.readOnly=locked;
+  if(td) td.classList.toggle('stage-active',!locked && STAGE<4);
+}
+function applyStage(){
+  const ar=LANG==='ar';
+  if(STAGE===3 && !document.querySelector('input[name=fault]:checked')){
+    const f0=document.querySelector('input[name=fault0]:checked');
+    if(f0){ const r=document.querySelector(`input[name=fault][value="${f0.value}"]`); if(r) r.checked=true; }
+  }
+  [1,2,3].forEach(s=>{
+    const d=STAGE_DEF[s], locked=(s!==STAGE);
+    d.ids.forEach(id=>lockField($(id),locked));
+    d.radios.forEach(n=>document.querySelectorAll(`input[name=${n}]`).forEach(r=>{ const l=r.closest('label')||r; l.classList.toggle('locked',locked); r.tabIndex=locked?-1:0; }));
+    if(d.checks) document.querySelectorAll('.dmg').forEach(c=>{ c.closest('label').classList.toggle('locked',locked); c.tabIndex=locked?-1:0; });
+    d.sigs.forEach(k=>{ SIG[k].lock(locked); SIG[k].td.classList.toggle('stage-active',!locked && STAGE<4); });
+  });
+  // always-computed / linked fields
+  ['driver-cost','report-no','sn-d1','sn-d2'].forEach(id=>{ $(id).readOnly=true; });
+  ['d1','d2'].forEach(k=>{ $(k+'-arrow').style.display = STAGE===1 ? '' : 'none'; });
+  // stage-1-only extras
+  const s1=STAGE===1;
+  document.querySelectorAll('.diag-tools,.hint').forEach(e=>e.style.display=s1?'':'none');
+  $('diagram').style.cursor=s1?'crosshair':'default';
+  $('cam-btn').style.display=s1?'':'none'; $('photo-input').closest('label').style.display=s1?'':'none';
+  document.querySelectorAll('#photos button').forEach(b=>b.style.display=s1?'':'none');
+  // stepper
+  $('stepper').style.display=SINGLE_STAGE?'none':'';
+  $('stepper').innerHTML=[1,2,3].map(s=>`<span class="${s<STAGE?'done':(s===STAGE?'cur':'')}">${s<STAGE?'✔ ':s+'. '}${ar?STAGE_DEF[s].ar:STAGE_DEF[s].en}</span>`).join('<i>›</i>');
+  // main action
+  const btn=$('btn-send');
+  if(STAGE<4){ btn.style.display=''; btn.textContent=ar?STAGE_DEF[STAGE].send_ar:STAGE_DEF[STAGE].send_en; }
+  else btn.style.display='none';
+  // status line (also printed in the PDF)
+  const hist=HISTORY.map(h=>`<span style="white-space:nowrap">✔ ${ar?STAGE_DEF[h.stage].ar:STAGE_DEF[h.stage].en}: <bdi>${h.name||'—'}</bdi> — <bdi dir="ltr">${h.at}</bdi></span>`).join(' &nbsp;•&nbsp; ');
+  $('status-cell').innerHTML=`<b>${STATUS_TXT[STAGE][ar?0:1]}</b>${hist?'<br><span class="hist">'+hist+'</span>':''}`;
+  if(typeof setView==='function') setView();
+}
+function stageSignerName(s){ return s===1 ? $('supervisor').value.trim() : s===2 ? $('maint-name').value.trim() : $('sn-mgr').value.trim(); }
+function validateStage(){
+  const d=STAGE_DEF[STAGE], ar=LANG==='ar', miss=[];
+  (d.req||[]).forEach(([id,a,e])=>{ if(!$(id).value.trim()) miss.push(ar?a:e); });
+  (d.reqRadio||[]).forEach(([n,a,e])=>{ if(!document.querySelector(`input[name=${n}]:checked`)) miss.push(ar?a:e); });
+  if(miss.length){ alert((ar?'الرجاء تعبئة الحقول التالية قبل الإرسال:\n• ':'Please fill these fields before sending:\n• ')+miss.join('\n• ')); return false; }
+  const noSig=(d.reqSig||[]).filter(k=>!SIG[k].data);
+  if(noSig.length && !confirm(ar?'لم يتم التوقيع بعد. هل تريد الإرسال بدون توقيع؟':'Not signed yet. Send without a signature?')) return false;
+  return true;
+}
+async function sendStageFile(){
+  if(STAGE>3 || !validateStage()) return;
+  const prev={stage:STAGE, history:HISTORY.slice()};
+  const done=STAGE, fileTag=STAGE_DEF[done].file;
+  HISTORY.push({stage:done, name:stageSignerName(done), at:fmtNow()});
+  STAGE = SINGLE_STAGE ? 4 : done+1; applyStage();
+  const msg = SINGLE_STAGE ? singleMessage() : done<3 ? buildSendMessage(done+1) : '';
+  const res=await makeAndDeliverPdf(fileTag, msg, (done<3 && !SINGLE_STAGE) ? done+1 : 0);
+  if(res==='aborted' || res==='error'){ STAGE=prev.stage; HISTORY=prev.history; applyStage(); return; }
+  autosave();
+  const ar=LANG==='ar';
+  const next = done===1 ? (ar?'أرسل الملف إلى إدارة الصيانة.':'Send the file to Maintenance.')
+             : done===2 ? (ar?'أرسل الملف إلى إدارة الأسطول.':'Send the file to Fleet Management.')
+             : (ar?'تم اعتماد التقرير وإغلاقه.':'The report is approved and closed.');
+  if(done<3 || SINGLE_STAGE) showSendModal(done+1, msg, res);
+  else alert(next);
+}
+$('btn-send').addEventListener('click',()=> API_URL ? sendStageOnline() : sendStageFile());
+
+// ===== Online flow (Google Drive) =====
+function randKey(){ const a=new Uint8Array(12); crypto.getRandomValues(a); return [...a].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+function onlineLink(){ return toolBaseUrl()+'?r='+encodeURIComponent($('report-no').value)+'&k='+REPORT_KEY; }
+function blobToB64(blob){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(blob); }); }
+async function apiSave(body){
+  if(window.NWAuth) NWAuth.attach(body);
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+  const j=await r.json(); if(authFail(j) && window.NWAuth) NWAuth.relogin();
+  return j;
+}
+async function apiLoad(id,key){
+  const r=await fetch(API_URL+'?action=load&id='+encodeURIComponent(id)+'&key='+encodeURIComponent(key)+'&authToken='+encodeURIComponent(authToken()));
+  const j=await r.json(); if(authFail(j) && window.NWAuth) NWAuth.relogin();
+  return j;
+}
+function reportSummary(){
+  const g=$('garage'), sh=document.querySelector('input[name=share]:checked');
+  return { bus:$('bus-no').value.trim(), driver:$('d1-name').value.trim(), driverId:$('d1-id').value.trim(), accDate:$('acc-date').value,
+    garage: g.value==='other' ? $('garage-other').value.trim() : (g.value ? g.options[g.selectedIndex].text : ''),
+    status: STATUS_TXT[STAGE][0], cost:$('cost').value.trim(), driverCost:$('driver-cost').value, share: sh ? sh.value+'%' : '' };
+}
+function onlineMessage(nextStage, link){
+  if(SINGLE_STAGE) return singleMessage();
+  const ar=LANG==='ar', rep=$('report-no').value, bus=$('bus-no').value.trim();
+  if(nextStage<=3){
+    const to = nextStage===2 ? (ar?'إدارة الصيانة':'Maintenance') : (ar?'إدارة الأسطول':'Fleet Management');
+    return ar ? `🚌 تقرير حادث رقم ${rep}\nالحافلة: ${bus}\n${faultLine(true)}الحالة: بانتظار ${to}\n\nاضغط الرابط لفتح التقرير وإكماله:\n${link}`
+              : `🚌 Accident report ${rep}\nBus: ${bus}\n${faultLine(false)}Status: waiting for ${to}\n\nTap the link to open and complete the report:\n${link}`;
+  }
+  return ar ? `✅ تقرير حادث رقم ${rep} — الحافلة ${bus}\nتم اعتماد التقرير من إدارة الأسطول.\n\nلعرض التقرير:\n${link}`
+            : `✅ Accident report ${rep} — Bus ${bus}\nApproved by Fleet Management.\n\nView the report:\n${link}`;
+}
+function showOnlineModal(nextStage, msg){
+  const ar=LANG==='ar';
+  if(SINGLE_STAGE){
+    $('sm-title').textContent=ar?'✔ تم حفظ التقرير في Google Drive':'✔ Report saved to Google Drive';
+    const s1=$('sm-step1'); s1.className='ok';
+    s1.textContent=ar?'اضغط زر واتساب واختر الشخص أو المجموعة — يُرسل ملف PDF مع الرسالة معاً.':'Tap WhatsApp and pick the contact or group — the PDF is sent together with the message.';
+    $('sm-step2').textContent=''; $('sm-step2').style.display='none';
+    $('sm-text').value=msg; $('sm-file').textContent=ar?'تنزيل نسخة PDF':'Download a PDF copy';
+    $('send-modal').style.display='flex'; return;
+  }
+  const to = nextStage===2 ? (ar?'إدارة الصيانة':'Maintenance') : nextStage===3 ? (ar?'إدارة الأسطول':'Fleet Management') : '';
+  $('sm-title').textContent = nextStage<=3 ? (ar?'✔ تم حفظ التقرير في Google Drive':'✔ Report saved to Google Drive') : (ar?'✔ تم اعتماد التقرير وحفظه':'✔ Report approved and saved');
+  const s1=$('sm-step1'); s1.className='ok';
+  s1.textContent = nextStage<=3 ? (ar?'اضغط زر واتساب واختر '+to+' — يُرسل ملف PDF مع الرسالة والرابط معاً.':'Tap WhatsApp and choose '+to+' — the PDF is sent together with the message and link.')
+                                : (ar?'التقرير النهائي (PDF) محفوظ في مجلد Google Drive. يمكنك إرسال الرابط للمباشر.':'The final PDF is saved in your Google Drive folder. You can send the link to the supervisor.');
+  $('sm-step2').textContent='';
+  $('sm-step2').style.display='none';
+  $('sm-text').value=msg;
+  $('sm-file').textContent=ar?'تنزيل نسخة PDF':'Download a PDF copy';
+  $('send-modal').style.display='flex';
+}
+async function sendStageOnline(){
+  if(STAGE>3 || !validateStage()) return;
+  const ar=LANG==='ar';
+  const prev={stage:STAGE, history:HISTORY.slice(), key:REPORT_KEY};
+  const done=STAGE;
+  if(!REPORT_KEY) REPORT_KEY=randKey();
+  HISTORY.push({stage:done, name:stageSignerName(done), at:fmtNow()});
+  STAGE = SINGLE_STAGE ? 4 : done+1; applyStage();
+  const link=onlineLink();
+  const busy=$('pdf-busy'), busyTxt=busy.querySelector('span'), oldTxt=busyTxt.textContent;
+  busyTxt.textContent = ar?'جاري الحفظ في Google Drive...':'Saving to Google Drive...'; busy.style.display='flex';
+  try{
+    const state=getState(true);
+    const to = STAGE===2 ? (ar?'إدارة الصيانة':'Maintenance') : STAGE===3 ? (ar?'إدارة الأسطول':'Fleet Management') : '';
+    const banner = STAGE<=3 ? (ar?'👆 اضغط في أي مكان على هذا الملف لفتح التقرير وإكمال مرحلة: '+to:'👆 Tap anywhere on this file to open the report and complete the stage: '+to) : '';
+    const pages=[await renderReportCanvas(banner), ...(await photoPages())];
+    const blob=buildPdf(pages, strToB64(JSON.stringify(state)), STAGE<=3 ? link : '');
+    const name=pdfName().replace(/\.pdf$/,'-'+STAGE_DEF[done].file+'.pdf'); LAST_PDF={blob,name};
+    const res=await apiSave({action:'save', id:$('report-no').value, key:REPORT_KEY, fromStage:done, state, pdf:await blobToB64(blob), pdfName:name, summary:reportSummary(), link});
+    if(!res || !res.ok) throw res||{error:'unknown'};
+    autosave();
+    busy.style.display='none'; busyTxt.textContent=oldTxt;
+    showOnlineModal(STAGE, onlineMessage(STAGE, link));
+  }catch(err){
+    console.error(err);
+    busy.style.display='none'; busyTxt.textContent=oldTxt;
+    STAGE=prev.stage; HISTORY=prev.history; REPORT_KEY=prev.key; applyStage();
+    const code=err && err.error;
+    if(code==='AUTH'){ alert(ar?'انتهت مدة الدخول. سجّل الدخول من الشريط الأحمر أعلى الصفحة ثم اضغط إرسال مرة ثانية — بياناتك محفوظة.':'Session expired. Sign in from the red bar at the top, then press Send again — your data is kept.'); return; }
+    if(code==='forbidden'){ alert(ar?'لا يمكنك تعديل تقرير كتبه موظف آخر.':'You cannot edit a report written by another employee.'); return; }
+    if(code==='too_big'){ alert(ar?'حجم التقرير كبير جداً — احذف بعض الصور ثم حاول مرة ثانية.':'The report is too large — remove some photos and try again.'); return; }
+    if(code==='stage_conflict'){ alert(ar?'هذه المرحلة تم إكمالها مسبقاً (ربما من جهاز آخر). افتح الرابط من جديد لرؤية آخر نسخة.':'This stage was already completed (maybe on another device). Reopen the link to see the latest version.'); return; }
+    if(code==='bad_key'||code==='not_found'){ alert(ar?'لم يتم العثور على هذا التقرير في Google Drive.':'This report was not found in Google Drive.'); return; }
+    if(confirm(ar?'تعذّر الاتصال بـ Google Drive (تأكد من الإنترنت).\n\nهل تريد إرسال التقرير كملف PDF بدلاً من ذلك؟':'Could not reach Google Drive (check the internet).\n\nSend the report as a PDF file instead?')) sendStageFile();
+  }
+}
+
+// Arriving from an online link (?r=REPORT&k=KEY)
+const ONLINE=(()=>{ const q=new URLSearchParams(location.search); return q.get('r') && q.get('k') ? {id:q.get('r'), key:q.get('k')} : null; })();
+function landingStatus(title, sub, spinning){
+  document.body.classList.add('landing-on');
+  $('landing').style.display='block'; $('report').style.display='none'; $('photo-page').style.display='none';
+  $('landing-title').innerHTML=title; $('landing-sub').innerHTML=sub||'';
+  $('landing-spin').style.display=spinning?'':'none';
+  ['landing-pick','inapp-warn','open-chrome','chrome-manual','copy-link'].forEach(id=>$(id).style.display='none');
+  document.querySelectorAll('#landing .landing-hint').forEach(e=>e.style.display='none');
+}
+async function openOnline(draft){
+  const ar=LANG==='ar';
+  landingStatus((ar?'جاري فتح تقرير الحادث ':'Opening accident report ')+'<bdi dir="ltr" style="white-space:nowrap">'+ONLINE.id+'</bdi>', ar?'لحظات...':'One moment...', true);
+  try{
+    const res=await apiLoad(ONLINE.id, ONLINE.key);
+    if(!res || !res.ok) throw res||{};
+    let st=res.state;
+    // keep unsent edits made on this device for the same report & stage
+    if(draft && draft.key===ONLINE.key && (draft.fields||{})['report-no']===ONLINE.id && Number(draft.stage)===Number(st.stage)) st=draft;
+    document.body.classList.remove('landing-on');
+    $('landing').style.display='none'; $('report').style.display=''; $('photo-page').style.display='';
+    setState(st); sigs.forEach(s=>s.size()); autosave();
+    try{ history.replaceState(null,'',toolBaseUrl()); }catch(e){}   // إعادة فتح الصفحة تبدأ تقريراً جديداً
+    if(STAGE===4) setTimeout(()=>alert(ar?'هذا التقرير مكتمل ومعتمد — للعرض فقط.':'This report is completed and approved — view only.'),300);
+  }catch(err){
+    const nf = err && (err.error==='not_found'||err.error==='bad_key');
+    landingStatus(ar?'تعذّر فتح التقرير':'Could not open the report',
+      nf ? (ar?'الرابط غير صحيح أو التقرير غير موجود.':'The link is invalid or the report does not exist.')
+         : (ar?'تأكد من اتصال الإنترنت ثم حاول مرة أخرى.':'Check your internet connection and try again.')+'<br><br><button type="button" class="big-btn" onclick="location.reload()">'+(ar?'إعادة المحاولة':'Try again')+'</button>', false);
+  }
+}
+
+
+// ===== Send link (opens the program on the right stage) =====
+function toolBaseUrl(){ return location.origin && location.origin!=='null' ? location.origin+location.pathname : location.href.split('?')[0]; }
+function stageLink(stage){
+  return toolBaseUrl()+'?stage='+stage+'&rep='+encodeURIComponent($('report-no').value)+'&bus='+encodeURIComponent($('bus-no').value.trim());
+}
+function faultLine(ar){ const f=document.querySelector('input[name=fault0]:checked'); return f ? (ar?'نسبة الخطأ (تقييم مبدئي): ':'Fault % (preliminary): ')+f.value+'%\n' : ''; }
+function buildSendMessage(stage){
+  const ar=LANG==='ar', rep=$('report-no').value, bus=$('bus-no').value.trim();
+  const to = stage===2 ? (ar?'إدارة الصيانة':'Maintenance') : (ar?'إدارة الأسطول':'Fleet Management');
+  return ar
+    ? `🚌 تقرير حادث رقم ${rep}\nالحافلة: ${bus}\n${faultLine(true)}الحالة: بانتظار ${to}\n\nلإكمال التقرير:\n1) الملف المرفق هو التقرير (PDF)\n2) افتح الرابط واختر الملف:\n${stageLink(stage)}`
+    : `🚌 Accident report ${rep}\nBus: ${bus}\n${faultLine(false)}Status: waiting for ${to}\n\nTo complete the report:\n1) The attached PDF is the report\n2) Open the link and choose the file:\n${stageLink(stage)}`;
+}
+function showSendModal(stage,msg,res){
+  const ar=LANG==='ar';
+  const to = stage===2 ? (ar?'إدارة الصيانة':'Maintenance') : (ar?'إدارة الأسطول':'Fleet Management');
+  $('sm-title').textContent=SINGLE_STAGE?(ar?'إرسال التقرير':'Send the report'):(ar?'إرسال التقرير إلى ':'Send the report to ')+to;
+  const s1=$('sm-step1');
+  s1.textContent = res==='shared' ? (ar?'✔ تمت مشاركة ملف PDF':'✔ PDF file shared') : (ar?'✔ تم تنزيل ملف PDF — أرفقه في محادثة الواتساب':'✔ PDF downloaded — attach it in the WhatsApp chat');
+  s1.className='ok';
+  $('sm-step2').textContent = ar?'أو اضغط زر واتساب لإرسال ملف PDF مع هذه الرسالة معاً:':'Or tap WhatsApp to send the PDF together with this message:';
+  $('sm-step2').style.display=''; $('sm-file').textContent=ar?'تنزيل الملف مرة أخرى':'Download file again';
+  $('sm-text').value=msg;
+  $('send-modal').style.display='flex';
+}
+// WhatsApp: share the PDF together with the message (caption) in one go
+$('sm-wa').addEventListener('click',async()=>{
+  const ar=LANG==='ar', text=$('sm-text').value;
+  try{ navigator.clipboard && navigator.clipboard.writeText(text).catch(()=>{}); }catch(e){}
+  if(LAST_PDF){
+    const file=new File([LAST_PDF.blob],LAST_PDF.name,{type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file],text})){
+      try{ await navigator.share({files:[file],text}); return; }
+      catch(e){ if(e && e.name==='AbortError') return; }
+    }
+    // no file sharing on this device (e.g. desktop): download the PDF, then open WhatsApp with the message
+    const url=URL.createObjectURL(LAST_PDF.blob), a=document.createElement('a');
+    a.href=url; a.download=LAST_PDF.name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    alert(ar?'تم تنزيل ملف PDF.\nسيفتح واتساب الآن مع الرسالة — أرفق الملف المنزّل في نفس المحادثة.':'The PDF was downloaded.\nWhatsApp will open with the message — attach the downloaded file in the same chat.');
+  }
+  window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+});
+$('sm-copy').addEventListener('click',async()=>{
+  const ar=LANG==='ar';
+  try{ await navigator.clipboard.writeText($('sm-text').value); }catch(e){ $('sm-text').select(); document.execCommand('copy'); }
+  $('sm-copy').textContent=ar?'✔ تم النسخ':'✔ Copied'; setTimeout(()=>$('sm-copy').textContent=ar?'نسخ الرسالة':'Copy message',1500);
+});
+$('sm-file').addEventListener('click',()=>{ if(LAST_PDF) deliverFile(LAST_PDF.blob, LAST_PDF.name, $('sm-text').value); });
+$('sm-done').addEventListener('click',()=>{ $('send-modal').style.display='none'; resetForm(); window.scrollTo({top:0}); });
+
+// ===== Arriving from a link (?stage=2&rep=...&bus=...) =====
+const LINK=(()=>{ const q=new URLSearchParams(location.search); const s=Number(q.get('stage')); return q.get('rep') && s>=2 && s<=3 ? {stage:s, rep:q.get('rep'), bus:q.get('bus')||''} : null; })();
+function showLanding(){
+  const ar=LANG==='ar', to = LINK.stage===2 ? (ar?'إدارة الصيانة':'Maintenance') : (ar?'إدارة الأسطول':'Fleet Management');
+  $('landing-title').innerHTML=(ar?'وصلك تقرير حادث رقم ':'Accident report ')+'<bdi dir="ltr" style="white-space:nowrap">'+LINK.rep+'</bdi>';
+  document.body.classList.add('landing-on');
+  $('landing-sub').innerHTML=(LINK.bus?(ar?'الحافلة: ':'Bus: ')+'<b>'+LINK.bus+'</b><br>':'')+(ar?'المرحلة المطلوبة منك: ':'Your stage: ')+'<b>'+to+'</b>';
+  $('landing').style.display='block';
+  if(IN_APP) showChromeHelp(true);
+  $('report').style.display='none'; $('photo-page').style.display='none';
+}
+function hideLanding(){
+  document.body.classList.remove('landing-on');
+  $('landing').style.display='none'; $('report').style.display=''; $('photo-page').style.display='';
+  try{ history.replaceState(null,'',toolBaseUrl()); }catch(e){}
+  sigs.forEach(s=>s.size());
+}
+const IS_ANDROID=/Android/i.test(navigator.userAgent);
+const IN_APP=/; wv\)|FBAN|FBAV|Instagram|WhatsApp|Line\/|Snapchat|Adobe/i.test(navigator.userAgent) || (IS_ANDROID && /Version\/[\d.]+ Chrome\/[\d.]+ Mobile/i.test(navigator.userAgent));
+function landingLink(){ return location.href; }
+function showChromeHelp(strong){
+  if(IS_ANDROID) $('open-chrome').style.display='';
+  $('chrome-manual').style.display=''; $('copy-link').style.display='';
+  if(strong) $('inapp-warn').style.display='';
+}
+$('open-chrome').addEventListener('click',()=>{
+  const u=new URL(landingLink());
+  location.href='intent://'+u.host+u.pathname+u.search+'#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url='+encodeURIComponent(u.href)+';end';
+});
+$('copy-link').addEventListener('click',async()=>{
+  const ar=LANG==='ar';
+  try{ await navigator.clipboard.writeText(landingLink()); }catch(e){ const ta=document.createElement('textarea'); ta.value=landingLink(); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  $('copy-link').textContent=ar?'✔ تم نسخ الرابط':'✔ Link copied';
+});
+$('landing-pick').addEventListener('click',()=>{
+  // If the file chooser doesn't open (common in apps' built-in browsers), offer to open in Chrome
+  let opened=false;
+  const mark=()=>{ opened=true; };
+  window.addEventListener('blur',mark,{once:true});
+  document.addEventListener('visibilitychange',mark,{once:true});
+  $('open-input').click();
+  setTimeout(()=>{ if(!opened && $('landing').style.display!=='none') showChromeHelp(true); },1500);
+});
+
+// Open a PDF saved by this program and continue its workflow
+$('btn-open').addEventListener('click',()=>$('open-input').click());
+$('open-input').addEventListener('change',async e=>{
+  const f=e.target.files[0]; e.target.value=''; if(!f) return;
+  const ar=LANG==='ar';
+  try{
+    const buf=await f.arrayBuffer();
+    const txt=new TextDecoder('latin1').decode(new Uint8Array(buf));
+    const a=txt.lastIndexOf('NWBDATA-BEGIN'), b=txt.lastIndexOf('NWBDATA-END');
+    if(a<0||b<a) throw new Error('nodata');
+    const st=JSON.parse(b64ToStr(txt.slice(a+13,b)));
+    if(st.app!=='NWB-accident') throw new Error('nodata');
+    const landing=$('landing').style.display!=='none';
+    if(landing && LINK){
+      const fr=(st.fields||{})['report-no'];
+      if(fr!==LINK.rep && !confirm(ar?`رقم التقرير في الملف (${fr}) يختلف عن الرابط (${LINK.rep}).\nهل تريد فتحه على أي حال؟`:`The file's report number (${fr}) differs from the link (${LINK.rep}).\nOpen it anyway?`)) return;
+      if(Number(st.stage)!==LINK.stage) alert(ar?'تنبيه: هذا الملف في مرحلة مختلفة عن الرابط — ربما تم إكماله مسبقاً أو هذه نسخة قديمة.':'Note: this file is at a different stage than the link — it may already be completed, or it is an older copy.');
+    } else if($('bus-no').value.trim() && !confirm(ar?'سيتم استبدال البيانات الحالية بالتقرير المفتوح. متابعة؟':'The current form will be replaced by the opened report. Continue?')) return;
+    if(landing) hideLanding();
+    setState(st); autosave();
+    window.scrollTo({top:0,behavior:'smooth'});
+    alert((ar?'تم فتح التقرير — المرحلة الحالية: ':'Report opened — current stage: ')+STATUS_TXT[STAGE][ar?0:1]);
+  }catch(err){
+    alert(ar?'هذا الملف لا يحتوي على بيانات تقرير قابلة للتعديل.\nيجب أن يكون ملف PDF محفوظاً من هذا البرنامج (الإصدار 2.0 أو أحدث).':'This file has no editable report data.\nIt must be a PDF saved by this program (version 2.0 or later).');
+  }
+});
+
+// ===== Garage dropdown =====
+function renderGarages(){
+  const sel=$('garage'), cur=sel.value;
+  const ar=LANG==='ar';
+  // الموظف المرتبط بكراج يرى كراجه فقط (عند كتابة تقرير جديد)
+  const ug=(STAGE===1)?userGarages():[], allowed=ug.length?ug.map(garageIdx):null;
+  const unmatched=ug.length && allowed.some(i=>i<0);
+  sel.innerHTML='<option value="">'+(ar?'— اختر موقع الكراج —':'— Select garage —')+'</option>'
+    + GARAGES.map((g,i)=>(!allowed||allowed.includes(i))?`<option value="g${i}">${ar?g[0]:g[1]}</option>`:'').join('')
+    + ((!allowed||unmatched)?'<option value="other">'+(ar?'أخرى (اكتب الموقع)':'Other (type location)')+'</option>':'');
+  sel.value=cur;
+  $('garage-other').style.display = sel.value==='other' ? 'block' : 'none';
+  sel.classList.toggle('is-placeholder', !sel.value);
+}
+$('garage').addEventListener('change',()=>{ renderGarages(); if($('garage').value==='other') $('garage-other').focus(); autosave(); });
+
+
+// ===== Quick entry wizard (stage 1) =====
+let PREVIEW=false;
+const WBIND=[['w-bus','bus-no'],['w1-name','d1-name'],['w1-id','d1-id'],['w2-name','d2-name'],['w2-id','d2-id'],['w-loc','location'],
+  ['w-sup','supervisor'],['w-date','acc-date'],['w-time','acc-time'],['w-plate','plate'],['w-cat','category'],['w-garage','garage'],
+  ['w-garage-other','garage-other'],['w-km','km'],['w-desc','desc'],['w-cause','cause'],['w-workshop','workshop-date']];
+const NAJM_NONE={ar:'لا يوجد',en:'None'};
+function wCount(){ const b=document.querySelector('#w-count button.on'); return b?Number(b.dataset.v):1; }
+function setCount(n){
+  document.querySelectorAll('#w-count button').forEach(b=>b.classList.toggle('on',Number(b.dataset.v)===n));
+  $('w-d2-field').style.display = n===2 ? '' : 'none';
+  document.querySelector('.w-sig[data-for="d2"]').style.display = n===2 ? '' : 'none';
+}
+document.querySelectorAll('#w-count button').forEach(b=>b.addEventListener('click',()=>{
+  setCount(Number(b.dataset.v));
+  if(Number(b.dataset.v)===1){ $('w2-name').value=''; $('w2-id').value=''; if(SIG.d2) SIG.d2.clear(); wSigDraw('d2'); }
+  pullFromWizard(); autosave();
+}));
+function pullFromWizard(){
+  WBIND.forEach(([w,r])=>{ $(r).value=$(w).value; });
+  const nj=$('w-najm').value.trim();
+  $('najm-no').value = nj || NAJM_NONE[LANG];
+  if(wCount()===1){ $('d2-name').value=''; $('d2-id').value=''; }
+  renderGarages(); syncSigNames(); calcCost();
+  document.querySelectorAll('.w-sig .nm').forEach(el=>{
+    const k=el.closest('.w-sig').dataset.for;
+    el.textContent = k==='d1'?$('d1-name').value : k==='d2'?$('d2-name').value : $('supervisor').value;
+  });
+}
+function pushToWizard(){
+  WBIND.forEach(([w,r])=>{ $(w).value=$(r).value; });
+  const nj=$('najm-no').value.trim();
+  $('w-najm').value = (nj===NAJM_NONE.ar||nj===NAJM_NONE.en) ? '' : nj;
+  setCount($('d2-name').value.trim()?2:1);
+  $('w-repno').textContent=$('report-no').value;
+  renderWizardGarage(); renderWizardChips(); ['d1','d2','sup'].forEach(wSigDraw);
+  pullFromWizard();
+}
+function renderWizardGarage(){
+  const ws=$('w-garage'), cur=$('garage').value;
+  ws.innerHTML=$('garage').innerHTML; ws.value=cur;
+  $('w-garage-other').style.display = cur==='other' ? '' : 'none';
+}
+$('w-garage').addEventListener('change',()=>{ $('w-garage-other').style.display = $('w-garage').value==='other'?'':'none'; if($('w-garage').value==='other') $('w-garage-other').focus(); });
+function renderWizardChips(){
+  const ar=LANG==='ar';
+  const DLIST=[...DAMAGE.map(r=>r[0]), ...DAMAGE.flatMap(r=>r.slice(1))]; // main areas first, then parts
+  $('w-dmg').innerHTML=DLIST.map((it,i)=>`<button type="button" class="dchk ${i<DAMAGE.length?'grp ':''}${$('dmg-'+it[0]).checked?'on':''}" data-k="${it[0]}"><span class="box"></span><span class="tx">${it[1]}<small>${it[2]}</small></span></button>`).join('');
+  const cur=document.querySelector('input[name=fault0]:checked');
+  if($('w-fault')) $('w-fault').innerHTML=PCTS.slice().reverse().map(p=>`<button type="button" data-v="${p}" class="${cur&&Number(cur.value)===p?'on':''}">${p}%</button>`).join('');
+}
+$('w-dmg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const cb=$('dmg-'+b.dataset.k); cb.checked=!cb.checked; b.classList.toggle('on',cb.checked); autosave(); });
+if($('w-fault')) $('w-fault').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+  const r=document.querySelector(`input[name=fault0][value="${b.dataset.v}"]`); const was=r.checked;
+  document.querySelectorAll('input[name=fault0]').forEach(x=>x.checked=false); r.checked=!was;
+  renderWizardChips(); autosave(); });
+document.getElementById('entry').addEventListener('input',e=>{ if(e.target.classList.contains('wi')){ e.target.classList.remove('bad'); pullFromWizard(); autosave(); } });
+document.getElementById('entry').addEventListener('change',()=>{ pullFromWizard(); autosave(); });
+setupDriver('w1'); setupDriver('w2'); setupBus('w-bus','w-bus-sug','w-bus-arrow','w-plate','w-cat');
+['w1','w2'].forEach(k=>{
+  const lift=()=>{ const r=$(k+'-name').getBoundingClientRect(); if(r.top>window.innerHeight*0.35) window.scrollBy({top:r.top-90,behavior:'smooth'}); };
+  $(k+'-name').addEventListener('focus',lift); $(k+'-arrow').addEventListener('mousedown',lift);
+});
+
+// signature pads inside the wizard write straight into the report signatures
+const WSIG={};
+document.querySelectorAll('.w-sig').forEach(box=>{
+  const key=box.dataset.for, c=box.querySelector('canvas'), ctx=c.getContext('2d'); let drawing=false;
+  function size(){ const r=c.getBoundingClientRect(); if(!r.width) return; c.width=r.width*2; c.height=r.height*2; draw(); }
+  function draw(){ const r=c.getBoundingClientRect(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.setTransform(2,0,0,2,0,0);
+    ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#0b2a6b';
+    const d=SIG[key]&&SIG[key].data; if(d){ const i=new Image(); i.onload=()=>ctx.drawImage(i,0,0,r.width,r.height); i.src=d; } }
+  const pos=e=>{const r=c.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
+  c.addEventListener('pointerdown',e=>{ drawing=true; c.setPointerCapture(e.pointerId); ctx.beginPath(); ctx.moveTo(...pos(e)); });
+  c.addEventListener('pointermove',e=>{ if(!drawing) return; ctx.lineTo(...pos(e)); ctx.stroke(); });
+  c.addEventListener('pointerup',()=>{ if(!drawing) return; drawing=false; SIG[key].set(c.toDataURL('image/png')); autosave(); });
+  box.querySelector('.w-sig-clear').addEventListener('click',()=>{ SIG[key].clear(); draw(); autosave(); });
+  WSIG[key]={size,draw};
+});
+function wSigDraw(k){ if(WSIG[k]) WSIG[k].draw(); }
+window.addEventListener('resize',()=>Object.values(WSIG).forEach(s=>s.size()));
+
+// move the bus picture and photos between the wizard and the report
+const DIAG_TD=$('diagram').parentNode, PHOTO_HOME={parent:$('photo-page').parentNode, next:$('photo-page').nextSibling};
+function placeShared(inWizard){
+  if(inWizard){
+    const slot=$('w-diagram-slot'); if(!slot.contains($('diagram'))) [...DIAG_TD.childNodes].forEach(n=>slot.appendChild(n));
+    const ps=$('w-photo-slot'); if(!ps.contains($('photo-page'))) ps.appendChild($('photo-page'));
+  } else {
+    const slot=$('w-diagram-slot'); if(slot.contains($('diagram'))) [...slot.childNodes].forEach(n=>DIAG_TD.appendChild(n));
+    if($('w-photo-slot').contains($('photo-page'))) PHOTO_HOME.parent.insertBefore($('photo-page'), PHOTO_HOME.next);
+  }
+}
+function setView(){
+  if(document.body.classList.contains('landing-on')) return;
+  const entry = STAGE===1 && !PREVIEW;
+  document.body.classList.toggle('mode-entry', entry);
+  placeShared(entry);
+  $('entry').style.display = entry ? '' : 'none';
+  $('report').style.display = entry ? 'none' : '';
+  $('preview-bar').style.display = (STAGE===1 && PREVIEW) ? '' : 'none';
+  if(entry){ $('photo-page').classList.remove('empty'); $('photo-page').style.display=''; }
+  else renderPhotos();
+  requestAnimationFrame(()=>{ Object.values(WSIG).forEach(s=>s.size()); sigs.forEach(s=>s.size()); });
+}
+function wValidate(){
+  const ar=LANG==='ar';
+  const need=[['w-bus','رقم الحافلة','Bus number'],['w1-name','السائق المتسبب الأول','1st driver'],['w-loc','موقع الحادث','Accident location'],['w-sup','اسم المباشر','Supervisor name'],['w-date','تاريخ الحادث','Accident date']];
+  if(wCount()===2) need.splice(2,0,['w2-name','السائق المتسبب الثاني','2nd driver']);
+  document.querySelectorAll('#entry .wi.bad').forEach(e=>e.classList.remove('bad'));
+  const miss=need.filter(([id])=>!$(id).value.trim());
+  miss.forEach(([id])=>$(id).classList.add('bad'));
+  if(miss.length){
+    $(miss[0][0]).scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>$(miss[0][0]).focus(),350);
+    alert((ar?'الرجاء تعبئة:\n• ':'Please fill in:\n• ')+miss.map(m=>ar?m[1]:m[2]).join('\n• '));
+    return false;
+  }
+  return true;
+}
+// إرسال مباشر بدون معاينة: حفظ في Drive ثم واتساب
+$('w-preview').addEventListener('click',()=>{
+  pullFromWizard();
+  if(!wValidate()) return;
+  autosave();
+  $('btn-send').click();
+});
+$('w-new').addEventListener('click',()=>{ if(confirm('بدء تقرير جديد؟ سيتم مسح البيانات الحالية.')){ resetForm(); window.scrollTo({top:0}); } });
+if(!API_URL) $('w-log').style.display='none', $('w-new').parentNode.style.gridTemplateColumns='1fr';
+// ===== Reports log (PIN protected — the PIN is checked by the Google script, never stored in this page) =====
+let LOG_PIN='', LOG_DATA=null, LOG_FOLDER='', LOG_FILTER='all';
+function pinGet(){ try{ return sessionStorage.getItem('nwb_log_pin')||''; }catch(e){ return ''; } }
+function pinSet(v){ try{ if(v) sessionStorage.setItem('nwb_log_pin',v); else sessionStorage.removeItem('nwb_log_pin'); }catch(e){} }
+async function fetchLog(){
+  const r=await fetch(API_URL+'?action=list&authToken='+encodeURIComponent(authToken()));
+  const j=await r.json(); if(authFail(j) && window.NWAuth) NWAuth.relogin();
+  return j;
+}
+function openPin(){
+  $('pin-input').value=''; $('pin-err').textContent='';
+  $('pin-modal').style.display='flex'; setTimeout(()=>$('pin-input').focus(),50);
+}
+async function tryPin(pin){
+  $('pin-ok').disabled=true; $('pin-err').textContent='...';
+  try{
+    const res=await fetchLog(pin);
+    if(res.ok){ LOG_PIN=pin; pinSet(pin); LOG_DATA=res.reports; LOG_FOLDER=res.folder; $('pin-modal').style.display='none'; showLog(); return true; }
+    $('pin-err').textContent = res.error==='bad_pin' ? 'الرقم السري غير صحيح'+(res.left!=null?' — متبقي '+res.left+' محاولات':'')
+      : res.error==='locked' ? 'تم إيقاف الدخول مؤقتاً بسبب محاولات خاطئة. حاول بعد 10 دقائق.'
+      : res.error==='pin_not_set' ? 'لم يتم تعيين رقم سري بعد في سكربت Google (LOG_PIN).'
+      : 'تعذّر فتح السجل ('+(res.error||'')+')';
+    pinSet('');
+  }catch(e){ $('pin-err').textContent='تعذّر الاتصال — تأكد من الإنترنت'; }
+  finally{ $('pin-ok').disabled=false; }
+  return false;
+}
+// السجل يفتح بحساب الدخول (بدون رقم سري): المدير والمشرف يرون كل التقارير، والباقي تقاريرهم فقط
+$('w-log').addEventListener('click',async()=>{
+  const busy=$('pdf-busy'), s=busy.querySelector('span'), o=s.textContent; s.textContent='جاري تحميل السجل...'; busy.style.display='flex';
+  try{
+    const res=await fetchLog();
+    if(res.ok){ LOG_DATA=res.reports; LOG_FOLDER=res.folder||''; showLog(); }
+    else alert(res.error==='AUTH'?'انتهت مدة الدخول — سجّل الدخول من الشريط الأحمر ثم حاول مرة ثانية.':'تعذّر فتح السجل ('+(res.error||'')+')');
+  }catch(e){ alert('تعذّر الاتصال — تأكد من الإنترنت'); }
+  finally{ busy.style.display='none'; s.textContent=o; }
+});
+$('log-lock').style.display='none';
+if(SINGLE_STAGE) document.querySelectorAll('#log-filter button[data-f="2"],#log-filter button[data-f="3"]').forEach(b=>b.style.display='none');
+$('pin-ok').addEventListener('click',()=>{ const v=$('pin-input').value.trim(); if(v) tryPin(v); });
+$('pin-input').addEventListener('keydown',e=>{ if(e.key==='Enter') $('pin-ok').click(); });
+$('pin-cancel').addEventListener('click',()=>$('pin-modal').style.display='none');
+function escH(s){ return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function renderLog(){
+  const q=$('log-search').value.trim().toLowerCase();
+  const list=(LOG_DATA||[]).filter(r=>(LOG_FILTER==='all'||String(r.stage)===LOG_FILTER) &&
+    (!q || [r.id,r.bus,r.driver,r.driverId,r.garage].join(' ').toLowerCase().includes(q)));
+  $('log-count').textContent=list.length+' تقرير';
+  $('log-list').innerHTML = list.length ? list.map(r=>`
+    <div class="log-item">
+      <div class="log-row1"><span class="log-bus">🚌 ${escH(r.bus||'—')}</span><span class="log-badge s${r.stage}">${escH(r.status)}</span></div>
+      <div class="log-meta">
+        ${escH(r.driver)}<br>
+        تاريخ الحادث: <bdi dir="ltr" style="color:inherit">${escH(r.accDate||'—')}</bdi>${r.garage?' · '+escH(r.garage):''}<br>
+        ${r.cost?'التكلفة: '+escH(r.cost)+' ريال':''}${r.driverCost?' · على السائق: '+escH(r.driverCost)+' ريال':''}${(r.cost||r.driverCost)?'<br>':''}
+        ${r.by?'كاتب التقرير: '+escH(r.by)+'<br>':''}<bdi dir="ltr">${escH(r.id)}</bdi><br>آخر تحديث: <bdi dir="ltr">${escH(r.updated)}</bdi>
+      </div>
+      <div class="log-btns">
+        ${r.pdfUrl?`<a href="${escH(r.pdfUrl)}" target="_blank" rel="noopener">PDF</a>`:''}
+      </div>
+    </div>`).join('') : '<div class="log-empty">لا توجد تقارير</div>';
+}
+function showLog(){ document.body.classList.add('mode-log'); $('logview').style.display=''; renderLog(); window.scrollTo({top:0}); }
+function hideLog(){ document.body.classList.remove('mode-log'); $('logview').style.display='none'; setView(); window.scrollTo({top:0}); }
+$('log-back').addEventListener('click',hideLog);
+$('log-lock').addEventListener('click',()=>{ LOG_PIN=''; LOG_DATA=null; pinSet(''); hideLog(); });
+$('log-search').addEventListener('input',renderLog);
+$('log-filter').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; LOG_FILTER=b.dataset.f;
+  document.querySelectorAll('#log-filter button').forEach(x=>x.classList.toggle('on',x===b)); renderLog(); });
+$('e-ver').textContent=$('app-ver').textContent;
+$('btn-edit').addEventListener('click',()=>{ PREVIEW=false; pushToWizard(); setView(); autosave(); window.scrollTo({top:0}); });
+
+// ===== Language =====
+function applyLang(){
+  const root=$('html-root'); root.lang=LANG; root.dir=LANG==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-ar]').forEach(el=>el.textContent=el.dataset[LANG]);
+  document.querySelectorAll('.sig-box').forEach(el=>el.dataset.label=LANG==='ar'?'التوقيع':'Signature');
+  document.querySelectorAll('[data-ph-ar]').forEach(el=>el.placeholder=LANG==='ar'?el.dataset.phAr:el.dataset.phEn);
+  renderGarages();
+  if(typeof renderWizardChips==='function'){ renderWizardGarage(); renderWizardChips(); }
+  if(typeof applyStage==='function') applyStage();
+  if(typeof LINK!=='undefined' && LINK && $('landing').style.display!=='none') showLanding();
+  $('btn-ar').classList.toggle('on',LANG==='ar'); $('btn-en').classList.toggle('on',LANG==='en');
+}
+function setLangShared(l){ LANG=l; try{ localStorage.setItem('hubLang',l); }catch(e){} applyLang(); }
+$('btn-ar').onclick=()=>setLangShared('ar');
+$('btn-en').onclick=()=>setLangShared('en');
+window.addEventListener('storage',e=>{ if(e.key==='hubLang'){ const l=e.newValue==='en'?'en':'ar'; if(l!==LANG){ LANG=l; applyLang(); } } });
+
+// ===== اسم المباشر والكراج من حساب الدخول =====
+function garageNorm(x){ return String(x||'').replace(/كراج/g,'').trim(); }
+function garageIdx(name){
+  const n=garageNorm(name); if(!n) return -1;
+  let i=GARAGES.findIndex(g=>garageNorm(g[0])===n);
+  if(i<0) i=GARAGES.findIndex(g=>{ const a=garageNorm(g[0]); return a.startsWith(n)||n.startsWith(a); });
+  return i;
+}
+function userGarages(){ return (window.NWAuth && NWAuth.garages) || []; }
+function applyUserDefaults(){
+  if(!window.NWAuth || STAGE!==1) return;
+  const nm=NWAuth.name||'';
+  if(nm){ $('w-sup').value=nm; $('w-sup').readOnly=true; $('supervisor').value=nm; }
+  const ug=userGarages();
+  renderGarages();
+  if(ug.length===1){
+    const i=garageIdx(ug[0]);
+    if(i>=0){ $('garage').value='g'+i; $('garage-other').value=''; }
+    else { $('garage').value='other'; $('garage-other').value=ug[0]; }
+    renderGarages(); renderWizardGarage();
+    $('w-garage-other').value=$('garage-other').value;
+    $('w-garage').disabled=true; $('w-garage-other').readOnly=true;
+  } else {
+    renderWizardGarage(); $('w-garage').disabled=false; $('w-garage-other').readOnly=false;
+  }
+  pullFromWizard(); autosave();
+}
+
+// ===== Init =====
+(function(){
+  renderGarages();
+  let d=null, old=null; try{ d=JSON.parse(localStorage.getItem(KEY)||'null'); old=JSON.parse(localStorage.getItem(KEY_OLD)||'null'); }catch(e){}
+  if(ONLINE && API_URL){ applyLang(); openOnline(d && d.app==='NWB-accident' ? d : null); return; }
+  if(LINK && d && d.app==='NWB-accident' && (d.fields||{})['report-no']===LINK.rep && Number(d.stage)===LINK.stage){ setState(d); try{history.replaceState(null,'',toolBaseUrl());}catch(e){} } // already opened on this device
+  else if(LINK){ showLanding(); }
+  else if(d && d.app==='NWB-accident'){
+    // تقرير مُرسل/مكتمل لا يُفتح تلقائياً — نبدأ بصفحة تعبئة جديدة. المسودة غير المرسلة فقط تُستعاد.
+    const finished = Number(d.stage)>=4 || (SINGLE_STAGE && Number(d.stage)>1);
+    if(finished){ try{ localStorage.removeItem(KEY); }catch(e){} }
+    else setState(d);
+  }
+  else if(old) restore(old);
+  if(!$('report-no').value) $('report-no').value=newReportNo();
+  if(!$('report-date').value) $('report-date').value=todayISO();
+  if(STAGE===1 && !$('acc-date').value) $('acc-date').value=todayISO();
+  renderPhotos(); applyLang(); applyStage(); pushToWizard(); setView();
+  applyUserDefaults();
+})();
+</script>
+<!-- ================= رابط السجل من القائمة الجانبية (#log) ================= -->
+<script>
+(function(){
+  function setLogHash(on){ var has=location.hash==='#log', base=location.pathname+location.search;
+    if(on&&!has) history.replaceState(null,'',base+'#log'); else if(!on&&has) history.replaceState(null,'',base);
+    window.dispatchEvent(new Event('nw-route')); }
+  var _show=window.showLog;
+  if(typeof _show==='function') window.showLog=function(){ _show.apply(this,arguments); setLogHash(true); };
+  ['log-back','log-lock'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ setLogHash(false); }); });
+  function go(){ var lv=document.getElementById('logview'), w=document.getElementById('w-log');
+    if(location.hash==='#log' && lv && lv.style.display==='none' && w && w.style.display!=='none') w.click(); }
+  window.addEventListener('hashchange',go);
+  setTimeout(go,300);
+})();
+</script>
+</body>
+</html>
